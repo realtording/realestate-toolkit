@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>房产决策工具集</title>
+
+<!-- ===== PWA / 添加到主屏幕 配置 ===== -->
+<!-- 让 iOS 把这个页面当作独立 App 运行：无地址栏、无浏览器工具条 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- 状态栏样式：black-translucent 让状态栏融入页面深色背景 -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- 主屏幕上显示的名称（建议中文不超过6字，避免被截断） -->
+<meta name="apple-mobile-web-app-title" content="房产工具集">
+<!-- 主题色：影响部分浏览器UI着色 -->
+<meta name="theme-color" content="#1B2A4A">
+
+<!-- 主屏幕图标：iOS 优先取 180x180，其余尺寸兼容旧设备 -->
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="167x167" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKcAAACnCAIAAAD7dNu7AAAFPElEQVR4nO3dv2ojVxSA8SsT8hKrwkWKZdUYQgjsCwRWTSCYQOp9gjR5hrxD6oXgJoVVpF4IhDRuBClSuNADZBsXsUEpxszOjmau7v97ztzvq7SLfDXWz+dqJAZ79eLVG5Otw36Xb/HFt95sM638WdrlRsyXV9dp12+q0ZOZ8IdglWTW++ODOV/3dzfdjXj+WPXOG+ySdfwx9uHqeNctxj5EHW85hdl7qx/2O7yldX934wV/4bU65DK7vLr2epPsOuvs6vJz3+2d1BlxRbns9ud3eMh15bLbn1GHXGNn4W3qkCvt6fFhvdla4GfVIVfa0+NDd8MC7/fOjYTXk9ubVmfQNXZKPjfuE+qQa2xuyifhx+qQa8y+sZ/C87quPsfX8mGfqDPo6nIkH407s664gCnv+qjOoOvKl3w47sy6yoKnvOtZnUFXVDB5P+7MurIip7wLdU0lITfdVRVs7ypKRX7Y75h1HaUi70JdQWnJDeryS05uUBdeDnJjzOp4PHIqJ7NM5IZZF1s+coO6zLKSm+S/tYDc+/uPX/rbL1+/7W/nJjfMeq2G5MN/FiA3qFdpRN7/Zxlyg3r5Jsm7/vnrXZljQL3FUC+aZdBLxjl83oQwj0I9cWeZX75+O3efL776IcMRTcQnsrGdZf7w/ra78fVPv1m+qhi5QT0su3TPfFoP//T4MDxjL0lu2OEdC2aerHtfXlh6GOrTubw8G2P+/Plb35WLfRRjCfXnHJkjk0BumlV3eUOVhFlmLarPkS+YeVRz6iPydqSHtfWJLORdDalD3teKOuTDmlCHfNTy1SE/beHqkE+2ZHXI51qsOuSWlqkOub0FfjbnRf7rN587Lvv97/+FH5Owljbrmch97yy8RamzsTu2HHXI3VuIehVyIZdIBLQEdch9U68OeUC61SEPS7E65MFpVYc8JpXqvEmLTJ865PEpU4c8ScrUh0EenCb1uV/VRb6pUZf5Sx+UpkOdl/O0KVCHPHnS1SHPkegrqOzkXhe3LOn6p/jkznpC8oD7Lzuh6mzsWZOoDnnuxKlDXiBZ6pCXSZA65MWSol6efDGXSAQkQh3ywtVXh7x8ldUhr1JNdchrVU0d8orVUedNWt0qqENevdLqkEuoqDrkQip3VcWI/MP7W/c/pDD8OzkUX6FZPyX3+vKAP7RBliqczbGxV6/+J7JUvkLq/Xwz6BIqdzaHt5zY4VsM9RZDvcVQbzHUWwz1FkO9xVSqc1VMZPrUIY9PmTrkSdKkDnmq1KhDnjA16pQw1FsM9RZDvcVQbzHUWwz1FkO9xVBvMdRbDPUWQ73FUG8x1FsM9RZDvcVQb7EK6lwVU73S6pBLqKg65EIqpw65nAqpj8i//PGd15ef3v+723+9Vpi8v9cik3f2+kZ8v+t8rY7H4+XVddbHYMqllX3WIRfYxXqzvb+7ybQ65AI77HcZZx1yseVSh1xyWdQhF156dcjld2GMSXhCB7nwDvvderNNOeuQaymZOuSKelaP3OQhV1G3vZsksw65uj6qh4075FrqB91EzjrkSvtE3WvcIVfUcNBN8KxDrrqxusu4Q66r0aCbyVm3w0Ouq1NyM7fDz8FDrqtJcuP1ug75YppVH4075OqaG3Rjn/UeHnJ1WcjN2R0+61V1lCk7uXF5XV9vtof9Lt0hUd7OkhtjVi9evXFcyxhzdjmqmLuRq3q/LvAy86Lx+0SW3V5mvtPoN+v9Yxh2exmFWYSoxzwepSrm+Q9Xj39sCiv+OY9VHx5H5KGQvYRPchr1vtG5Hj8EMeV7Mv8H8cnPT/P/MA0AAAAASUVORK5CYII=">
+<link rel="apple-touch-icon" sizes="152x152" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAIAAACXoLd2AAAE0UlEQVR4nO3cvWocVxTA8bMipM0DeAsVLoS3EYQQEKQOeF0Yggik1hOkyTP4HVIbgpoU2iK1IWDcqFlwkULFPkDcqIgEm2LMaDyf987cjzNn/v9qWe/ODvPzubOrkXb17MVLCd1hvwu+TWOtN9uwG/wq1IaqeKfnl6E2a7Xq4QqCupo4keUOgTe6u9vr4sYU0fGQBSF+AStEx3GOgYQwauM4/SAhTJYvpwfkYb+DMHF3t9eOlieOW0QxS6fnl46f5YYnkuU0ey7L7AAkg6in/mW2b2lFUVX9y2wnJIraeny4X2+2XZaub3Yob48P9/0PaIdkHFVVVewayhZIFFXVnMVWyzokiqrqWlGblpwj9TZ4Xqz2BSTjqKdBxdpQMpEa85rFoidIxlFJ7orVoWQidTViFos+QzKOGhqhWA4lE6ml0bNYBKSKJipKcRmLdTVv0xUP+x0TmbnpikVA5iyUogCZsYCKIrI6Ho+cINMXVlGYyCwFVxQg0xdDUQL+NRbV+vj378WNs4ur8s5IisI5MkYlYbWzi6t4isLSmqyoigJk8FrHUUT++fA26usCaSQgjcS71ql1raW1nn/3S9TdAHJMNbzqB4zmv6aJjx/DvX/z+psfXtXu/PTupnbP97/9Wd5+fLgv393EnsUiIDurDVZTrllhGfuTRmssrU81l8Szi6v3b157bSSLogDZf7bzLZeiLBCydeyy7EnY7ENalatlHLL1EoTJLP9kZzmKYhhyUYpiFXJpimIScoGKYg9ymYpiDHKximIJcsmKYuZz5KDiHz9+7bKdn//6L9g+pc3CRIZS9HqktmYPufAVtWzekCiWzRgSxWpzhUyjmPH6om+zhESx2fwgUWxtZpAodjUnSBR7mg0k71H7mwckioPNABJFl7RDouiYdsgiFAdTDZnlz5pmml5IFlWvlEKi6JvG3xDoUjR/lX9K6iZyoqLXIy2lC5IVdXSKIFGckhZIFCemAhLF6eWHRDFImSETKM70+qJvOSFRDFg2SBTDlgcSxeBlgEQxRqkheY8aqaSQKMYrHSSKUUt0GatU/PTuxuVr+qpfmUkupZjIqqLjU3y/k5GiQ7KipikuJIrJigtZ+KGYoOhLK4ppyn8Zi4IEpJGANBKQRgLSSEAaaR6QC7y+6NsMIFF0STskio6phkTRPb2QKHqlF5K8AtJIQBoJSCMBaSQgjQSkkYA0EpBGAtJIQBoJSCMBaSQgjQSkkdJBcn0xaokgUYxdCkgUExQdEsU0xYWsKX7761vHJzYf+dPNv47PbT5yynOn7HPKVsfj8fT8MsammcWUxZpIFBN3st5s726vw24UxcQd9rvwE4lilgJDopirkJAoZuxERIKcJlHM1WG/W2+2YSYSxewFgERRQ58hR6+uKOatWFdl4kSiqKcnSN+hRDF75TjK6IlEUVtfQDoOJYoaqo6jjJhIFHVWh+wfShSVVBtHaZ3ILksUldRUlK6ltWmJopJaFcXxHImi/johy6FEUU9d4yj9ExnjlwdodD2KIrJ69uLl4PNFpGcTFDsXgmHIcltYZsnxyLv+QGC92Rb/Lyhl7vPjOpHldoVlNkm+h9oPctxrkFfjDu8YyCmvRz1NOaTjIauvPfrlSQIdw6mQzb0RUB0Kfrj+B62wjvDVd6qPAAAAAElFTkSuQmCC">
+<link rel="apple-touch-icon" sizes="120x120" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAIAAAC2BqGFAAAD20lEQVR4nO3dv2oUURTH8bNBbH2AbJHCImSbgIgQsBayFoIEwTpPYOMz5B2sBdnGIltYBwS7NAuWKfYBTJPCBGIx4eZ678ydc8/cuXP//L7VJs7sJh8PZ3dHQ2a7B8c0oO1mPeT0vJovluJzn8hOU757hyfix84u9V0LxGdeE12nr93V5aq5wRfnQjfElfvaNeIcbhb0drMGsaOry1Wv9U7vvUC5t73Dk94XBa6Jxrrwyr1GOqExyLK61kj76oCyuK410gIN5SHd3d7MF0vbuv/JEPG7u73p+iMTGuMsTle2h/o/aCiLs2fZsH6EhrK4ro2hW2NHD82xl/UeoDHOsnqV1VBjouUxZ7kJ0MK8lKl5C4694Zuv8nazxkR756vcBGi/ZMpENLu/v8feYCZWJkw0vyHKBGhmA5VJ/N8NSu33zy/q9v7RaXNjuDJhovV0ZfVhEGUCtMpQdnxSFqAjBehIAZoo6IroqpZXHb/O3ukfPnv91jhg/+jU5n7+8mOoL6AK6EbZwL2+ODcOM6wDKlPZ0PaE2rh6d7c3YXH1SoM2cJs3HcbeaC3U6+Wusoe2x1a9o0uq/KBzkTXKDFopZ4Grl9Pr6HyVKSPorJUpF+jclSkL6AKUKX3oMpQp8VcdDuVvb546Tvzw4+9YX5O0dCdarMw5IH6JQhezMVQpQpenTAlCB1ce+2oRs7SgS1WmpKALVqZ0oMtWpkSgi3z2M5oeugZlmhy6EmWaFroeZZoQuiplmgq6NmWa5Opdq3J2V+N8iz3RAmXOAekXFbrCjaGKB12zMkWDrlyZ4kBDmSJAF3+1iNm40FBWjQgNZb2xoKFsNAo0nv3swkNDubXA1zqU8vXFueMHGl59/h72cdMv5ETryu4jOT9UUljBoLEx3AWDbnyh3FXI1QFlR9P/K3glATpSgI4UoCMF6EhND5371SJmE0NXokzTQtejTBNCV6VMk6+OegJ0pAAdKUBHCtCRAnSkAB0pQEcK0JECdKQAHSlARyo8dG1Xi5gFhoZyVyGhlfKLT1/dRxoHvD//4z7eOMD3eN+vZ4yC/a4szLK7MBMN5d4CQEOZ0858sby6XInPhzKnob+hE8r85NBQ9mqHiATbA8r8tpv1fLGUTDSUBXlDQ1nWAzRze0DZt2ZvkNdEQ3lIj9DuoYayIDXOZEx0lzWUBenKZK8O2xrKggxl6t3RUA5VC7QaaijLsseZuiZ64JWmmmtVJqLZ7sGx4xwiaj0N2bm5XNDqfFj31qvU/4Zlvlg2f1eoK84s9k+0ui/CGrHis3Ch9ftl3nXBCRz8oIc8UgEN+a7/Af/kAeMtWNE7AAAAAElFTkSuQmCC">
+<!-- 标签页 / 浏览器书签图标 -->
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
+
+<!-- Web App Manifest：安卓 Chrome 与部分桌面浏览器的"安装"功能依赖此文件 -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIuilv+mbheWbvuaIv+S6p+WGs+etluW3peWFt+mbhiIsICJzaG9ydF9uYW1lIjogIuaIv+S6p+W3peWFt+mbhiIsICJkZXNjcmlwdGlvbiI6ICIxN+S4quaIv+S6p+i0ouWKoeiuoeeul+W3peWFt++8jOS7juS5sOWNluWGs+etluWIsOeojuWKoeinhOWIkiIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRjdGNUYwIiwgInRoZW1lX2NvbG9yIjogIiMxQjJBNEEiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQtcHJpbWFyeSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQUlBQUFEZHZ2dFFBQUFHRFVsRVFWUjRuTzNkdjJvY1Z4U0E4U3NUMHVZQnJFSkZpbUExZ2hBTWdkUUJLNFVnaUVEcVBFRWFQNFBlSWJVaHFIR2hMVkliQWlLTm1vVVVLVlRzQThTTmk5aXdLYTRZcldaM1orZmVjLytlODMyVnNMd3pZODJQYzJkbmQrV2o1eTlldVZLdGxvdGkrekxlOGVsNW1SMTlsblhySXpFblo1ZFpkMGREbzU5OFBrOUhPU2JRY1BTSWFhVDd1MnYvUlhKSmlRRjVPcmhwTmk4cElhTmtnS0RUVVFrWkpRQUVuVTVMd2tnRUNEb0tFaktLQjdSYUxxQ2pwdnU3NnpoRE1ZQVlQQ3FMRzBYQmdCZzh1Z3NkUmMrQ3RvNGU5WjJjWFFhOVlCQUFDRDFHQ2pJMEZ4QjZURFhmMEN4QTZESFlURU9IQWFISFpwOCtmamcrUFQ5bzZBQWc5TmpzMDhjUC9vdURocVlBb2NkbWd4N2Z0S0c5Z05CanM1RWUzNFNoc1B0QXBMdWRlcWJiRFlqeFk3QnBQZnVHMEE1QTZESFluTm16MHhCTEdNV3NYRU5qUUl3ZmF3WHAyUjVDVENEVFNXYVA3d2tneG8rcDR2U01oaEFUeUdqeTJlTjdCTVQ0c1pOUXorWVFZZ0taSzlYczhUMEFZdndZS1pXZVlRZ3hnUXlWZHZiNEFHU2xISHFjLzFRRzY1ZjZNdWxaTFJkTUlQMWwwdU1Ea1BLeTZuRUEwbDF1UFE1QWlpdWd4emwzdEY2dnVZTFdWeGs5amdta3NtSjZISUQwVlZLUHkvMWJXaWxIZi8vNTIvRDFWOS8rc3ZtdHdub2MxMEI5dFVsbk04K292QjdIRXRaUisvVDRiMVhSNHdCRXdnRFVSeFBqeC9mUFgyL0tITWtvQUpFb0FKRW9uc1kzM2NHVnEzb0FhcXRvTVY5KzgzUGFJNWtaZ0NwM1VNeHdxN0ROYWNTTnhOTGRYbDE4OGQwUEUzL2gvYnViMForOGZQM1dmN0hQVUszeDR3QlVwdW5oc1MxbU8yL0kzeTNjZk1aZWtZNlBKU3hYY2pTamhudk4xZEZzQnFCa1RZdnhsekszVnhkeEc2LzFTc1hCQUJUZi9PdGZ4UUVvckRsanhsUUFtb29aY3pBQTdXMzZ6VGZrQTlEdVJucEFzeTllVE4wUmV1WUhvSEhvQ1FwQVQwSlBhQUI2REQwUkFlZ2g5TVFGSU9mUUl3aEE2QkZsSFJCNmhKa0doQjU1ZGdHaEowbEdYOG9JMHZQNzk1K0hidituUC80TFBxWStzemlCY3V1SmZsU1BtUVBFeXBVMlc0RFFrenhEZ0tycmFmWjl6WktzQUVKUHBrd0FRaysrOUFOQ1Q5YVVBMEpQN2pRRFFrK0IxQUpDVDVsMEFxcXV4MDRLQWFHblpOb0FvYWR3cWdDaHAzeXFBRzJHbmpMcEFUVHhYNUJRdnBRQVFrK3ROQUJxODllWEdxbDdRRnc0MTYxdlFPaXBYc2VBME5OQ3ZYNHFZMW9QbjZNb1ZwY1RLTG1lNkVkUmY0Qll1WnFxTTBEb2FhMmVBS0dud2JvQmhKNDI2d01RZXBxdEEwRG9hYm5XQWRYVlkrUjl6WkthQm9TZTltc1hFSHE2cUZGQTZPbWxGZ0docDZPYUE0U2V2bW9MRUhxNnF5RkEzTy9wc1ZZQW9hZlRtZ0NFbm42ckR3ZzlYVmY1TGEwalBlL2YzZHhlWGN4LytNdlhiOU1lRDRWV2N3SnQ2d25kUXBBMnlsRTFRSEk5MUVKMUFISGRvNmI2RjlIbzZibzZnQVkwNk9tOWFzL0NvS09qK2tzWWRSMkFTQlNBU0JTQVNCU0FTQlNBU0JTQVNCU0FTSlEyUUx5dnVYQ3FBS0duZkhvQW9hZEtTZ0NocDFZYUFLR25ZdDBEUWsvZHVnZEVkUU1RaVFJUWlRSVFpUUlRaVFJUWlRSVFpUUlRaVFJUWlRSVFpUUlRaVFJUWlRSVFpUUlRaVFJUWlRSVFpUUlRaVFJUWlRSVFpV29DRU85cjdyZjZnTkRUZFpVQm9hZjNhZ0pDajRLcUFVS1BqdW9BMnRiejlhOXZJcmF6ODFFLzN2d2JzYWw5ajBxN3RZVC96RVk2V3EvWEoyZVhKWGZKN05GVTZRbUVIbVU5T3o0OXY3KzdMck16OUNocnRWeVVtMERvVVZraFFPalJXZ2xBNkZGY2RrRG8wZDB6NTF5KzYyajBLRzYxWEJ5Zm5tZWNRT2l4VUM1QTZESFNBNkMwcXhoNjFPZlhMNWRqQXFISFZJK0FrZ3doOUZob0dEOHU3UVJDajhHZUFKSU1JZlFZYVhQOHVGUVRDRDFtR3dPS0dFTG9zZE5vL0RqNUJFS1A4WFlBbWorRTBHT3E3ZkhqOWsyZ09ZYlFZNnFkZWx6MEVvWWU4dTBGTkRHRTBHT3RmZVBIVFUrZ25ZYlFZNjBKUGU3Z0VqWXloQjVyVGV0eGM2NkJCa1Bvc2RaQlBXN21SWFRKai81UUk4M1I0K1kvQ3pzK1BWOHRGN0pEb202YXFjY0ZQWTNIa0pIbTYzR2g5NEV3cEw0Z1BjNjVvK2N2WGtYc3d6a1h0QnRxdjdqVEdnTm8yQitHMUJSOU51TUJPVWFSaW9RblVRUW95UkZRclpLY3VBU0FFaDRObFNuaHlVb0d5QWVqeGt0K2doSUQ4ZzFQOVpIVVNQbk9TQlpBUTZPYlJuZ3FWckdmL1AvYVVEbjZQUnR3dXdBQUFBQkpSVTVFcmtKZ2dnPT0iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQUlBQUFCN0drT3RBQUFTQjBsRVFWUjRuTzNkTzY1ZDFSM0g4V1ZrTVFsY1VGQWczQ0JGRVJJVFFMSWJwQWdocFdZRWFSaEQ1cEE2RXFLaHdBVTFVaVNVaHNaU2loUVVIa0JvWE1TV1NMR2R3L0Y1N3NkYWV6MytuMDlGRU03ZHR1LzkvdmJhNXo0ZXZQZlJrOFFTTDU0L3EzMEp3R1dQSGordGZRazllVmo3QXRwMUxmVHZmL3pGemxjQ3pIVHR3OVl3WFBUQUNlRGc1RjFINkdFWXYvejg3ZkgvdEFlVDZBTndISDNGaHlDTzl5RHlHRVFjQU5FSERpS1BRYUFCT0hSZjlJR0xEbU1RWkFuR0h3RGRCNVlLc2dURERvRHVBOXVOdlFRRERzQ1VmdDBITXBxV1lMQVpHR2NBM1BJRHBRMTJJQmhoQU56eUF6c2I0MERROXdCSVAxQlI3elBRNndCSVA5Q0lmbWVndndHUWZxQkJQYzVBVHdNZy9VRGorcHFCYmdiZ3hmTm4wZzkwNFplZnYrMWlBem9ZQURmK1FIZTZPQW8wUFFEU0QzU3Q4UmxvZHdBODh3SEcwT3dUb1JZSHdJMC9NSmcyandMTkRZQWJmMkJVclIwRjNxbDlBVzlSZjJCZzczLzh4YldmV2x4Rkt5Y0FqMzJBSU5wNUhOVEVBTGp4QjZKcDRYRlEvVWRBNmc4RTFNTGpvSm9uQUk5OWdPRHFQZzZxTmdCdS9BRW10UjRIMVhrRXBQNEFCN1VlQjFVWUFQVUhPRkZsQS9ZZUFQVUh1R2ovRGRoMUFOUWY0SWFkTjJDL0FWQi9nTHYyM0lDZEJrRDlBV2JhYlFQMkdBRDFCMWhrbncwb1BnRHFEN0RDbzhkUFMyOUEyUUZRZjRBVlhyOTZtY3B2UU1FQlVIK0FGYWI2VDRwdVFLa0JVSCtBRlk3clB5bTNBVVVHUVAwQlZqaXYvNlRRQnVRZkFQVUhXT0ZhL1NjbE5pRHpBS2cvd0FxMzZ6L0p2Z0U1QjBEOUFWYVlVLzlKM2cyby94UEJBQ0tiWC8vc3NnMkEyMytBcFZiVVArTWhJTThBcUQvQVVxdnYvWE50UUlZQlVIK0FwVFkrK2NteUFWNERBTmhieGVmK3g3WU9nTnQvZ0VWeTFYLzdJV0RUQUtnL3dDSjU3LzAzYnNENkFWQi9nRVZLUFBuWnNnRmVBd0RZUXlQUC9ZK3RIQUMzL3dEekZhMy82a1BBbWdGUWY0RDVkcmozWDdjQkhnRUJGTlRnazUrRHhRUGc5aDlncGozcnYrSVE0QVFBVUVUTDkvNlRaUVBnOWg5Z2ppcjFYM29JV0RBQTZnOHdSOFY3LzBVYjRCRVFRRTd0UC9rNW1Ec0FidjhCN21xaC92TVBBVTRBQUhtMFVQOUZaZzJBMjMrQTI1cXEvOHhEZ0JNQXdGWk4xWCsrK3dQZzloL2doamJyUCtjUTRBUUFzRjZiOVovcHpnQzQvUWU0cHZINjN6MEVPQUVBck5GNC9lZTROUUJ1L3dFdTZxWCt0dzhCVGdBQXkvUlMvN3NNQU1BQ3c5US8zUmdBejM4QVR2UlkveHRQZ1p3QUFHYnBzZjYzWFI0QXQvOEF4N3F1LzdWRGdCTUF3QjFkMS84R0F3Qnd5NmoxVHhjSHdQTWZnTWt3OWIvNEZNZ0pBT0N5WWVwL2pRRUF1R0Q0K3FmekFmRDhCMkRJK3A4L0JYSUNBSGpMa1BXL3lBQUEvQzVPL2RQSkFIaitBMFEyZlAxUG5nSTVBUUNrRktEKzV3d0FRTVQ2SndNQUVMUCs2WGdBdkFBQUJCU3Qvc2N2QXpnQkFIRkZxLzhKQXdBRUZieit5UUFBTWFsL09neUFGd0NBT0lMWC8vQXlnQk1BRUV2dytoOHpBRUFnNm4vTUFBQlJxUDhKQXdDRW9QN25IcnozMFJPdkFBTmpVLzl6TDU0L2N3SUFCcWYrMXhnQVlHVHFmNE1CQUlhbC9yY1pBR0JNNm4rWEFRQUdwUDV6R0FCZ05Pby9rd0VBaHFMKzh6MzQ3YmZmZkJFQU1BYjFYOFFKQUJpRStpOWxBSUFScVA4S0JnRG9udnF2ODdEMkJRQzg4YTkvL08zOFgzNzQ2VmUzZjVYNnIrWkZZS0N5aTkwL2QzRUoxSDhMajRDQW1tYlcvK0ovcWY0Yk9RRUFkY3hQLzRucEtLRCsyemtCQUJXc3J2LzBhOVUvQ3dNQTdHMUwvU2YvL3VmZnMxeEpjQVlBSUNnREFPeHErKzMveENGZ093TUE3Q2RYL1NjMllDTURBQkNVQVFBSXlnQUFPOG43L0dmaUtkQVdCZ0FnS0FNQTdLSEU3VDhiK1c2Z1FDbWkzemdEQUdTaitIMHhBTUFtb3Q4dkF3QXNvL2pETUFEQWZjMUcvNE0vL3JuMkpYVE1BQUFYTkZ0OE1qSUF3QnVpSDQwQmdMaDZMNzduUHhzWkFJaWxldlEvL1BTckxOZWcvdHNaQUJoYzllS24vLzhVWDFyamg4TERnS3BILzI3eE4xNmgyLzhzbkFCZ0JOV0xuMUw2OWNmdnAzLzQ1T3Z2N3Y3SEgvenh6NnUva2FmNjUrSUVBRjFxcXZqbmJtL0E2MWN2RC8rOGFBYWtQeThEQU4xb1BQb25ybTNBY2Ywbk16ZEEvYk16QU5DdXZvcC83bndEenV0LzdPSVM2SDQ1WGdPQXR2UWUvUnR1MXo5cC9lNE1BRlEyY1BHUDNhMC8rek1BVUVHUTZCK29mNXNNQU93aFd2R1BxWCt6REFDVUVqbjZCK3JmTWdNQTJTaitDZlZ2bkFHQVRhcEgvL0JORjM3NjYrZFZMNFQrR0FCWXBucnhrKyt0UmlZR0FPNnJIbjNGcHdRREFCZFVMMzRTZmNvekFQQkc5ZWdyUGpzekFNUlZ2ZmhKOUtuS0FCQk8zZTRyUHUwd0FNUlNwZjZpVDVzTUFJSHNWbi9GcHdzR2dDaEsxMS8wNlk0QklJUVM5VmQ4ZW1jQUdGL0crb3MrSXpFQURHNWovUldmZ1JrQVJyYXUvcUpQRUFhQVljMnZ2K0lUMHp1MUx3Q0tVSCs0eXdBd0lQV0hPUXdBbzFGL21Na0FNQlQxaC9rTUFPTlFmMWpFQURBSTlZZWxEQUFqVUg5WXdRRFFQZldIZFF3QWZWTi9XTTBBMERIMWh5ME1BT05UZjdqSUFOQ3JtYmYvNmcvWEdBQzZwUDZ3blFHZ1Arb1BXUmdBT3FQK2tJc0JvQ2ZxRHhrWkFMcFI0Z2U3UTJRR2dENzRsSC9JemdEUUFmV0hFZ3dBclZOL0tNUUEwRFQxaDNJTUFPMVNmeWpLQU5BbzlZZlNEQUF0VW4vWXdjUGFGd0NuYXRYL204L2V6ZmovdHNpWFAveTMxcHNtTWljQTJoS3cvdFhmT21FWkFCb1NzLzd0WEFQUkdBQmFFYm4razNhdWhDQU1BRTFRLzBscjE4UFlEQUQxK1p3ZnFNSUFVSm42UXkwR2dKclVIeW95QUZTai9sQ1hBYUFPOVlmcURBQVZxSDkycjErOXJIMEo5TWNBc0RmMXowNzlXY2NBc0N2MXowNzlXYzBBc0IvMXowNzkyY0lBc0JQMXowNzkyY2dBc0FmMXowNzkyYzRBVUp6Nlo2ZitaR0VBS0V2OXMxTi9jakVBRktUKzJhay9HUmtBU2xILzdOU2Z2QXdBUmFoL2R1cFBkZ2FBL05RL08vV25CQU5BWnVxZm5mcFRpQUVnSi9YUFR2MHB4d0JRZ2ZyUHBQNFVaUURJWnVidHYvclBwUDZVWmdESVEvM3pVbjkyWUFESVFQM3pVbi8yWVFEWVN2M3pVbjkyWXdEWVJQMmhYd2FBOWVaLzBpZlFJQVBBU2o3bEgzcG5BRmhEL1dFQUJvREYxQi9HWUFCWVJ2MWhHQWFBQmRRZlJtSUFtRXY5WVRBR2dGblVIOFpqQUxoUC9XRklCb0E3MUI5R1pRQzRSZjFoWUFhQXE5UWZ4bVlBdUV6OVlYZ0dnQXZVSHlJd0FKeFNmd2pDQVBBVzlZYzREQUMvVTM4SXhRRHdodnBETkFhQWxOUWZRaklBcUQ4RVpRQ2lVMzhJeXdDRXB2NFFtUUdJUy8waE9BTVFsUG9EQmlBaTlRZVNBUWhJL1lHSkFZaEYvWUVEQXhDSStnUEhERUFVNmcrY01BQWhxRDl3N21IdEM2QzRvdlgvNXJOM2wvNlNYTDc4NGIrMTNqU013UW1BTi9xcWYvVzNEZ013QUlPYmVmdmZYZjNidVFib2x3RVkyZGoxbjdSekpkQWRBekNzQ1BXZnRIWTkwQXNETUtaeTlRZUdZUUFHcFA3QUhBWmdOUE0vNlJNSXpnQU14UmQ4QWZNWmdIR29QN0NJQVJpRStnTkxHWUFScUQrd2dnSG9udm9ENnhpQXZxay9zSm9CNkpqNkExc1lnRjZwUDdDUkFlaVMrZ1BiR1lEK3FEK1FoUUhvalBwbjlQclZ5OXFYQURVWmdKNm9mMGJxRHdhZ0crcWZrZnBETWdDOVVQK00xQjhtQnFBRDZwK1Irc09CQVdpZCttZWsvbkRNQURSTi9UTlNmemhoQU5xbC9obXBQNXd6QUkxUy80elVIeTR5QUMxUy80elVINjR4QU0xUi80elVIMjR3QUcxUi80elVIMjR6QUExUi80elVIKzR5QUsxUS80elVIK1l3QUUxUS80elVIMll5QVBXcGYwYnFEL01aZ01yVVB5UDFoMFVNUUUzcW41SDZ3MUlHb0JyMXowajlZUVVEVUlmNkE5VVpnQXJVSDJpQkFXaVgrZ05GR1lDOXpiejlWMytnTkFPd0svVUgybUVBOXFQK1FGTU13RTdVSDJpTkFkaUQrZ01OTWdERnpmK2tUNEE5R1lDeWZNby8wQ3dEVUpENkF5MHpBS1dvUDlBNEExQ0UrZ1B0ZTFqN0FnWTB2LzYvL3ZqOVQzLzl2T1MxblByazYrLzJmSE5BeTV3QU1sdFUvNkpYY3RIT2V3TzB6QURrMUhqOUp6WUFtQmlBYkxxby84UUdBTWtBNU5KUi9TYzJBREFBR1hSWGY0QmtBTFpUZjZCVEJtQVQ5UWY2WlFEVzg5VmVRTmNNUUhIcUQ3VEpBSlNsL2tDekRFQkI2ZyswekFBQUJHVUExcnQ5ZysvMkgyaWNBZGprV3VYVkgyaWZBZGpxdlBYcUQzVEJ6d1BJUVBHQkhqa0JBQVJsQUFDQ01nQUFRUmtBZ0tBTUFFQlFCZ0FnS0FNQUVKUUJBQWpLQUFBRVpRQUFnaklBQUVFWkFJQ2dEQUJBVUFZQUlDZ0RBQkNVQVFBSXlnQUFCR1VBQUlJeUFBQkJHUUNXZWYzcVplMUxBUEl3QUN5Zy9qQVNBOEJjNmcrRE1RRE1vdjR3SGdQQWZlb1BReklBM0tIK01Db0R3QzNxRHdNekFGeWwvakEyQThCbDZnL0RNd0Jjb1A0UWdRSGdsUHBERUFhQXQ2Zy94R0VBK0ozNlF5Z0dnRGZVSDZJeEFLU2svaENTQVVEOUlTZ0RFSjM2UTFnR0lEVDFoOGdNUUZ6cUQ4RVpBSUNnREFCQVVBWUFJQ2dEQUJDVUFRQUl5Z0FBQkdVQUFJSXlBQUJCR1FDQW9Bd0FRRkFHQUNBb0F3QVFsQUVBQ01vQUFBUmxBQUNDTWdBQVFSa0FnS0FNQUVCUUJnQWdLQU1BRUpRQkFBaktBQUFFWlFBQWdqSUFBRUVaQUlDZ0RBQkFVQVlBSUNnREFCQ1VBUUFJeWdBQUJHVUFBSUl5QUFCQkdRQ0FvQXdBUUZBR0FDQW9Bd0FRbEFFQUNNb0FBQVJsQUFDQ01nQUFRUmtBZ0tBTUFFQlFCZ0FnS0FNQUVKUUJBQWpLQUFBRVpRQUFnaklBQUVFWkFJQ2dETUFlWHI5Nldmc1NBRTRaZ09MVUgyaVRBU2hML1lGbUdZQ0MxQjlvbVFFb1JmMkJ4aG1BSXRRZmFKOEJ5RS85Z1M0WWdNelVIK2lGQWNoSi9ZR09HSUJzMUIvb2l3SElRLzJCN2hpQUROUWY2SkVCMkVyOWdVNFpnRTNtMS84UGYvbDcwU3RaYXN2MS9PbjcvK1M3a0F5MlhNOUl2NWVSM3NmWWh3RlliK205ZnpzZkQ5dXZwSjF1YnIrU2tYNHZJNzJQc1FNRHNOSzZKejh0ZkZUa3VvWVd1cG5yR2tiNnZZejBQa1pwQm1DTkxjLzk2MzVzNUgzcmRidVo5NjJQOUhzWjZYMk1vaDY4OTlHVEY4K2Z2Zi94RjdXdnBCdGU5UVVHOE9MNU15ZUFaZFFmR0lZQldFRDlnWkVZZ0xuVUh4aU1BWmhGL1lIeEdJRDcxQjhZa2dHNFEvMkJVUm1BVzlRZkdOZzdLYVZIajUvKzh2TzN0YStrT2VvUGpPckY4MmVQSGo5MUFyaE0vWUhoR1lBTDFCK0l3QUNjVW44Z0NBUHdGdlVING5nekFGNEhUdW9QeERDOUFweWNBQTdVSDRqR0FLU2sva0JJQmtEOWdhQitINENZTHdPb1B4REs0UVdBRlB3RW9QNUFaSEVIUVAyQjRJSU9nUG9EdkRVQVFWNEdVSDhncHVNWEFGTEFFNEQ2QTB4aURZRDZBeHljRHNEQVQ0SFVINGpzNVBsUGluTUNVSCtBRXlFR1FQMEJ6bDBZZ01HZUFxay93UG56bnpUOENVRDlBYTRaZVFEVUgrQ0d5d013d0ZNZzlRZVlYSHorazBZOUFhZy93RjFYQjZEZlE0RDZBeHhjdS8xUDQ1MEExQjlncHFFR1FQMEI1cnMxQUgwOUJWSi9nQk0zbnYra1lVNEE2Zyt3MUowQjZPSVFvUDRBNTI3Zi9xY0JUZ0RxRDdETy9RRm8rUkNnL2dBWDNiMzlUMTJmQU5RZllJdFpBOURnSVVEOUFhNlpjL3VmT2owQnFEL0Fkbk1Ib0oxRGdQb0QzRER6OWo5MWR3SlFmNEJjRmd4QTlVT0ErZ1BjTnYvMlB5MDlBVlRjQVBVSHVHMVIvVk12ajREVUh5Qzd4UU93L3lGQS9RSHVXbnI3bjlvL0FhZy9RQ0ZyQm1DM1E0RDZBOHl4NHZZL3JUNEI3TEFCNmc4d3g3cjZwMllmQWFrL1FHbnJCNkRjSVVEOUFXWmFmZnVmTnA0QVNteUErZ1BNdEtYK2Fmc2pvTHdib1A0QU0yMnNmMnJxTlFEMUI5aFRoZ0hJY2doUWY0RDV0dC8rcDF3bmdJMGJvUDRBODJXcGY4cjRDR2oxQnFnL3dIeTU2cCtxdndhZy9nQzE1QnlBcFljQTlRZFlKT1B0ZjhwK0FwaS9BZW9Qc0VqZStxY1NqNERtYklENkF5eVN2ZjZwMEdzQXR6ZEEvUUVXS1ZIL1ZPNUY0R3Nib1A0QWl4U3FmeXI2V1VEbkc2RCtBSXVVcTM4cS9XbWd4eHVnL2dDTEZLMS8ydUhyQUtZTlVIK0FSVXJYUCszemhXQ1BIajk5OGZ6WkRtOElZQXc3MUQvdDlwWEFOZ0JncG4zcW4vYjhWaEEyQU9DdTNlcWZkdjVlUURZQTRJWTk2NS8yLzJad05nRGdvcDNybjZwOE4xQWJBSEJpLy9xbld0OE8yZ1lBSEZTcGYwcnB3WHNmUGRuL3JVNm1EYWp5Mndab1FkME0xaHlBU2EzcEE2aXJldjBxLzBTdzVIRVFFRkwxK3FjV1RnQVRqNE9BSU5ySlhTc0RNR2xoRWdIS2FhcHk5UjhCSGZNNENCaFlVL1ZQclowQUp1MmNqd0N5YUROckxRN0FwTFdwQkZpbjJacTFPd0NwMWMwRW1LbnhpRFU5QUpQRy93UUJ6blVScmc0R1lOTHNHUXJnUkMrOTZtWUFVaWVMQ2tUV1Y2WjZHb0JKWDMrK1FCQTlwcW0vQVpqMCtHY05ES25mSFBVNkFKTisvOXlCQWZTZW9MNEhZTkw3M3dIUW5UR3lNOElBVEE3ZlE2TDN2eEtnV1lOMVpwd0JPQmhqbVlHbURCbVdBUWRnTXRoUUExV01YWkpoQitCZzdMOC9vSVFnM1JoL0FBNkMvSTBDcTBXclJLQUJPRGora1FOQi9wcUJheUlISWVJQUhJdjhkdzloK2NDZlJCK0FZeWMvakN6eXV3VU14a2YzUlFiZ3Ftcy9uTks3RGpUTGgrMGkvd09tZGFTOFpRNzVrQUFBQUFCSlJVNUVya0pnZ2c9PSIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55In1dfQ==">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B2A4A;
+    --ink-soft: #3A4A6B;
+    --clay: #C8765A;
+    --clay-soft: #E8B8A4;
+    --paper: #F7F5F0;
+    --paper-deep: #EDE9E0;
+    --charcoal: #2D2D2D;
+    --sage: #6B8E7B;
+    --sage-bg: #E8EFE9;
+    --rust: #B5483D;
+    --rust-bg: #F5E6E3;
+    --line: #D8D2C4;
+
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--charcoal);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px 0 24px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .brand {
+    padding: 0 28px 28px;
+    border-bottom: 1px solid rgba(247,245,240,0.12);
+    margin-bottom: 8px;
+  }
+
+  .brand-mark {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--clay-soft);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .brand-title {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--paper);
+    white-space: nowrap;
+  }
+
+  .brand-sub {
+    font-size: 12.5px;
+    color: rgba(247,245,240,0.55);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .brand-author {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--clay-soft);
+  }
+
+  .nav-group {
+    padding: 18px 16px 6px;
+  }
+
+  .nav-group-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(247,245,240,0.38);
+    padding: 0 12px 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: rgba(247,245,240,0.78);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    line-height: 1.4;
+  }
+
+  .nav-item:hover {
+    background: rgba(247,245,240,0.06);
+    color: var(--paper);
+  }
+
+  .nav-item.active {
+    background: var(--clay);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .nav-num {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    opacity: 0.6;
+    min-width: 16px;
+  }
+
+  /* ---------- Main ---------- */
+  .main {
+    padding: 48px 56px 80px;
+    max-width: 920px;
+  }
+
+  .panel { display: none; animation: fadein 0.35s ease; }
+  .panel.active { display: block; }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 10px;
+  }
+
+  .panel-title {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .panel-desc {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin-bottom: 36px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  @media (max-width: 880px) {
+    .grid { grid-template-columns: 1fr; }
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; }
+    .main { padding: 32px 20px 60px; }
+  }
+
+  .field {
+    margin-bottom: 18px;
+  }
+
+  .field label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .field label .hint {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: #9A9486;
+  }
+
+  .field input[type="number"],
+  .field input[type="text"],
+  .field select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 7px;
+    font-family: var(--mono);
+    font-size: 14px;
+    background: #fff;
+    color: var(--charcoal);
+    transition: border-color 0.15s ease;
+  }
+
+  .field select { font-family: var(--sans); cursor: pointer; }
+
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--clay);
+    box-shadow: 0 0 0 3px rgba(200,118,90,0.15);
+  }
+
+  .field-row { display: flex; gap: 12px; }
+  .field-row .field { flex: 1; }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slider-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--clay);
+  }
+  .slider-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--clay);
+    min-width: 52px;
+    text-align: right;
+  }
+
+  /* ---------- Results ---------- */
+  .results {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    position: sticky;
+    top: 48px;
+    align-self: start;
+  }
+
+  .result-headline {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9A9486;
+    margin-bottom: 6px;
+  }
+
+  .result-big {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+
+  .result-big.positive { color: var(--sage); }
+  .result-big.negative { color: var(--rust); }
+
+  .result-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+
+  .breakdown {
+    border-top: 1px solid var(--paper-deep);
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    font-size: 13.5px;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .breakdown-row:last-child { border-bottom: none; }
+
+  .breakdown-row .label { color: var(--ink-soft); }
+  .breakdown-row .val { font-family: var(--mono); font-weight: 600; color: var(--charcoal); }
+
+  .agent-note {
+    margin-top: 20px;
+    background: var(--paper);
+    border-left: 3px solid var(--clay);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+  }
+
+  .agent-note-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 6px;
+  }
+
+  .agent-note-text {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  .disclaimer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 11.5px;
+    color: #9A9486;
+    line-height: 1.6;
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel { animation: none; }
+  }
+
+  button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+/* =========================================================
+   工具数据结构与计算逻辑
+========================================================= */
+
+const TOOLS = [
+  { group: "买卖决策", items: [
+    { id: "rentbuy", num: "01", name: "租 vs 买" },
+    { id: "netproceeds", num: "02", name: "卖房净到手" },
+    { id: "moveup", num: "03", name: "置换预算" },
+    { id: "listingtime", num: "04", name: "最佳挂牌时间" },
+  ]},
+  { group: "贷款财务", items: [
+    { id: "afford", num: "05", name: "可负担房价" },
+    { id: "refi", num: "06", name: "再融资分析" },
+    { id: "downpayment", num: "07", name: "首付来源对比" },
+    { id: "armfixed", num: "08", name: "ARM vs 固定利率" },
+  ]},
+  { group: "投资配置", items: [
+    { id: "caprate", num: "09", name: "出租房回报" },
+    { id: "1031", num: "10", name: "1031递延税" },
+    { id: "vsmarket", num: "11", name: "房产 vs 股市" },
+    { id: "estate", num: "12", name: "资产传承结构" },
+  ]},
+  { group: "政策与区域", items: [
+    { id: "milltax", num: "13", name: "百万富翁税影响" },
+    { id: "schoolpremium", num: "14", name: "学区溢价" },
+    { id: "holdcompare", num: "15", name: "持有成本对比" },
+  ]},
+  { group: "卖家专属", items: [
+    { id: "renovroi", num: "16", name: "装修 ROI" },
+    { id: "pricestrategy", num: "17", name: "定价策略模拟" },
+  ]},
+];
+
+function fmt(n, opts={}) {
+  const { decimals=0, sign=false } = opts;
+  if (isNaN(n) || !isFinite(n)) return "—";
+  const s = n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  if (sign && n > 0) return "+$" + s;
+  if (n < 0) return "-$" + s.replace('-','');
+  return "$" + s;
+}
+function fmtPct(n, decimals=1) {
+  if (isNaN(n) || !isFinite(n)) return "—";
+  return n.toFixed(decimals) + "%";
+}
+function num(id) { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? 0 : v; }
+
+/* ---------- WA capital gains tax helper ----------
+   WA state long-term capital gains tax: 7% on gains over $270,000 (2024 threshold, adjusts w/ inflation)
+   simplified flat 7% above exemption for this tool
+------------------------------------------------- */
+const WA_CG_EXEMPTION = 270000;
+const WA_CG_RATE = 0.07;
+
+/* =========================================================
+   渲染侧边栏
+========================================================= */
+const sidebar = document.getElementById('sidebar');
+let sidebarHTML = `
+  <div class="brand">
+    <div class="brand-mark">SEATTLE · REAL ESTATE DESK</div>
+    <div class="brand-title">房产决策工具集</div>
+    <div class="brand-sub">从买卖到税务规划，帮你实现数据驱动判断<br><span class="brand-author">开发者：David Ding, Licensed since 2012</span></div>
+  </div>
+`;
+TOOLS.forEach(g => {
+  sidebarHTML += `<div class="nav-group"><div class="nav-group-label">${g.group}</div>`;
+  g.items.forEach(item => {
+    sidebarHTML += `<button class="nav-item" data-id="${item.id}" onclick="showPanel('${item.id}')">
+      <span class="nav-num">${item.num}</span><span>${item.name}</span>
+    </button>`;
+  });
+  sidebarHTML += `</div>`;
+});
+sidebar.innerHTML = sidebarHTML;
+
+/* =========================================================
+   面板内容定义（每个工具：HTML + init + calc）
+========================================================= */
+const main = document.getElementById('main');
+
+function panelShell(eyebrow, title, desc, formHTML, resultsId) {
+  return `
+    <div class="panel-eyebrow">${eyebrow}</div>
+    <h1 class="panel-title">${title}</h1>
+    <p class="panel-desc">${desc}</p>
+    <div class="grid">
+      <div class="form-col">${formHTML}</div>
+      <div class="results" id="${resultsId}"></div>
+    </div>
+    <div class="disclaimer">以上计算基于您输入的假设条件与简化模型，仅供初步参考，不构成投资、税务或法律建议。实际交易请结合具体情况与专业人士（经纪人、贷款顾问、税务师、律师）核实。</div>
+  `;
+}
+
+const panels = {};
+
+/* ---------- 01 租 vs 买 ---------- */
+panels.rentbuy = {
+  title: "租 vs 买",
+  eyebrow: "买卖决策 · 01",
+  desc: "对比在西雅图地区租房与买房，N 年后的财务结果差异——把首付的机会成本也算进去。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>房屋总价 <span class="hint">USD</span></label><input type="number" id="rb_price" value="950000" oninput="calc_rentbuy()"></div>
+      <div class="field"><label>首付比例 <span class="hint">%</span></label><input type="number" id="rb_down" value="20" oninput="calc_rentbuy()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>贷款利率 <span class="hint">年化 %</span></label><input type="number" id="rb_rate" value="6.5" step="0.1" oninput="calc_rentbuy()"></div>
+      <div class="field"><label>贷款年限</label><input type="number" id="rb_term" value="30" oninput="calc_rentbuy()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>每月房产税+保险 <span class="hint">USD</span></label><input type="number" id="rb_tax" value="850" oninput="calc_rentbuy()"></div>
+      <div class="field"><label>每月维护成本 <span class="hint">USD</span></label><input type="number" id="rb_maint" value="300" oninput="calc_rentbuy()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>当前同类租金 <span class="hint">月，USD</span></label><input type="number" id="rb_rent" value="3200" oninput="calc_rentbuy()"></div>
+      <div class="field"><label>租金年涨幅 <span class="hint">%</span></label><input type="number" id="rb_rentgrowth" value="3" step="0.5" oninput="calc_rentbuy()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>房产年增值率 <span class="hint">%</span></label><input type="number" id="rb_appreciation" value="4" step="0.5" oninput="calc_rentbuy()"></div>
+      <div class="field"><label>持有/对比年限</label><input type="number" id="rb_years" value="7" oninput="calc_rentbuy()"></div>
+    </div>
+    <div class="field">
+      <label>若租房，省下的首付投资年化回报 <span class="hint">%</span></label>
+      <input type="number" id="rb_invreturn" value="7" step="0.5" oninput="calc_rentbuy()">
+    </div>
+  `,
+};
+
+function calc_rentbuy() {
+  const price = num('rb_price'), downPct = num('rb_down')/100, rate = num('rb_rate')/100;
+  const term = num('rb_term'), monthlyTax = num('rb_tax'), monthlyMaint = num('rb_maint');
+  const rent0 = num('rb_rent'), rentGrowth = num('rb_rentgrowth')/100;
+  const appreciation = num('rb_appreciation')/100, years = num('rb_years');
+  const invReturn = num('rb_invreturn')/100;
+
+  const downPayment = price * downPct;
+  const loanAmt = price - downPayment;
+  const monthlyRate = rate/12, n = term*12;
+  const mortgagePmt = monthlyRate > 0 ? loanAmt * (monthlyRate * Math.pow(1+monthlyRate,n)) / (Math.pow(1+monthlyRate,n)-1) : loanAmt/n;
+
+  // Buy scenario: home equity after `years` (appreciation) - remaining loan balance + all payments made (cost), vs cash flow
+  let balance = loanAmt;
+  let totalPI = 0, totalTaxMaint = 0;
+  const monthsHeld = years*12;
+  for (let m=0; m<monthsHeld; m++) {
+    const interest = balance * monthlyRate;
+    const principal = mortgagePmt - interest;
+    balance -= principal;
+    totalPI += mortgagePmt;
+    totalTaxMaint += (monthlyTax + monthlyMaint);
+  }
+  const homeValueFuture = price * Math.pow(1+appreciation, years);
+  const homeEquity = homeValueFuture - balance;
+  const buyTotalCashOut = downPayment + totalPI + totalTaxMaint;
+  const buyNetWorth = homeEquity - buyTotalCashOut + downPayment; // equity gained net of payments, downPayment added back conceptually as it's part of equity
+  // Simplify: net position = (home equity at end) - (total cash paid in, excluding the equity-building principal which is captured in equity)
+  const buyNetPosition = homeEquity - (totalPI - (loanAmt - balance)) - totalTaxMaint - downPayment + downPayment;
+  // cleanest framing: wealth from buying = equity built (appreciation + principal paydown) - (interest paid + tax/maint paid)
+  const principalPaid = loanAmt - balance;
+  const interestPaid = totalPI - principalPaid;
+  const appreciationGain = homeValueFuture - price;
+  const buyWealth = downPayment + principalPaid + appreciationGain - interestPaid - totalTaxMaint;
+
+  // Rent scenario: invest down payment + monthly savings (mortgage+tax+maint - rent) into market
+  let investBalance = downPayment;
+  let rent = rent0;
+  let totalRentPaid = 0;
+  for (let m=0; m<monthsHeld; m++) {
+    if (m>0 && m%12===0) rent *= (1+rentGrowth);
+    const ownerMonthlyCost = mortgagePmt + monthlyTax + monthlyMaint;
+    const monthlySavings = ownerMonthlyCost - rent;
+    investBalance *= (1+invReturn/12);
+    if (monthlySavings > 0) investBalance += monthlySavings;
+    totalRentPaid += rent;
+  }
+  const rentWealth = investBalance - downPayment; // net gain from investing, comparable basis
+
+  const diff = buyWealth - rentWealth;
+  const resEl = document.getElementById('res_rentbuy');
+  const winner = diff >= 0 ? "买房" : "租房+投资";
+  resEl.innerHTML = `
+    <div class="result-headline">${years}年后财务结果对比</div>
+    <div class="result-big ${diff>=0?'positive':'negative'}">${winner}更优</div>
+    <div class="result-sub">净值差额 ${fmt(Math.abs(diff))}（按当前假设）</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">买房：房屋净值收益</span><span class="val">${fmt(buyWealth)}</span></div>
+      <div class="breakdown-row"><span class="label">　其中房产增值</span><span class="val">${fmt(appreciationGain)}</span></div>
+      <div class="breakdown-row"><span class="label">　其中已还本金</span><span class="val">${fmt(principalPaid)}</span></div>
+      <div class="breakdown-row"><span class="label">　减：已付利息</span><span class="val">-${fmt(interestPaid)}</span></div>
+      <div class="breakdown-row"><span class="label">　减：地税+维护</span><span class="val">-${fmt(totalTaxMaint)}</span></div>
+      <div class="breakdown-row"><span class="label">租房：投资组合收益</span><span class="val">${fmt(rentWealth)}</span></div>
+      <div class="breakdown-row"><span class="label">月供 vs 当前租金</span><span class="val">${fmt(mortgagePmt+monthlyTax+monthlyMaint)} vs ${fmt(rent0)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${diff>=0 ?
+        '在当前假设下买房占优，但差距会随利率和增值率假设敏感变化——建议把增值率调低到2-3%再测一次，看结论是否依然稳健。' :
+        '租房+投资在当前假设下占优，这通常发生在利率偏高、增值预期保守的情形——但别忽略买房的非财务价值（稳定性、装修自由度），数字只是决策的一部分。'}</div>
+    </div>
+  `;
+}
+
+/* ---------- 02 卖房净到手 ---------- */
+panels.netproceeds = {
+  title: "卖房净到手",
+  eyebrow: "买卖决策 · 02",
+  desc: "扣除贷款余额、佣金、过户费与华盛顿州资本利得税后，您实际能拿到手的金额。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>预计售价 <span class="hint">USD</span></label><input type="number" id="np_price" value="1100000" oninput="calc_netproceeds()"></div>
+      <div class="field"><label>当年购入价 <span class="hint">USD</span></label><input type="number" id="np_basis" value="700000" oninput="calc_netproceeds()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>剩余贷款余额 <span class="hint">USD</span></label><input type="number" id="np_loan" value="380000" oninput="calc_netproceeds()"></div>
+      <div class="field"><label>装修/资本性支出累计 <span class="hint">USD</span></label><input type="number" id="np_capex" value="40000" oninput="calc_netproceeds()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>中介佣金 <span class="hint">%</span></label><input type="number" id="np_commission" value="5" step="0.5" oninput="calc_netproceeds()"></div>
+      <div class="field"><label>过户/其他费用 <span class="hint">%</span></label><input type="number" id="np_closing" value="1.5" step="0.1" oninput="calc_netproceeds()"></div>
+    </div>
+    <div class="field">
+      <label>房产类型</label>
+      <select id="np_type" onchange="calc_netproceeds()">
+        <option value="primary">自住房（可能符合联邦25万/50万免税额）</option>
+        <option value="investment">投资房 / 非自住</option>
+      </select>
+    </div>
+  `,
+};
+
+function calc_netproceeds() {
+  const price = num('np_price'), basis = num('np_basis'), loan = num('np_loan');
+  const capex = num('np_capex'), commPct = num('np_commission')/100, closingPct = num('np_closing')/100;
+  const type = document.getElementById('np_type').value;
+
+  const commission = price * commPct;
+  const closingCosts = price * closingPct;
+  const adjustedBasis = basis + capex;
+  const rawGain = Math.max(0, price - adjustedBasis - commission - closingCosts);
+
+  // Federal primary residence exclusion (simplified, assumes single filer 250k / not distinguishing MFJ here, show note)
+  let federalTaxableGain = rawGain;
+  if (type === 'primary') {
+    federalTaxableGain = Math.max(0, rawGain - 250000); // conservative single-filer assumption, noted below
+  }
+  // WA state capital gains tax: 7% above $270k exemption, applies regardless of primary/investment per WA law (primary residence is actually exempt from WA cap gains tax)
+  let waCGTax = 0;
+  if (type === 'investment') {
+    waCGTax = Math.max(0, rawGain - WA_CG_EXEMPTION) * WA_CG_RATE;
+  }
+  // rough federal LTCG estimate at 15% for illustration
+  const federalTaxEst = federalTaxableGain * 0.15;
+
+  const netProceeds = price - loan - commission - closingCosts - federalTaxEst - waCGTax;
+
+  const resEl = document.getElementById('res_netproceeds');
+  resEl.innerHTML = `
+    <div class="result-headline">预计净到手金额</div>
+    <div class="result-big">${fmt(netProceeds)}</div>
+    <div class="result-sub">基于售价 ${fmt(price)} 计算</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">售价</span><span class="val">${fmt(price)}</span></div>
+      <div class="breakdown-row"><span class="label">减：剩余贷款</span><span class="val">-${fmt(loan)}</span></div>
+      <div class="breakdown-row"><span class="label">减：中介佣金</span><span class="val">-${fmt(commission)}</span></div>
+      <div class="breakdown-row"><span class="label">减：过户及其他费用</span><span class="val">-${fmt(closingCosts)}</span></div>
+      <div class="breakdown-row"><span class="label">资本利得（已扣调整后基础）</span><span class="val">${fmt(rawGain)}</span></div>
+      <div class="breakdown-row"><span class="label">减：联邦资本利得税（估算）</span><span class="val">-${fmt(federalTaxEst)}</span></div>
+      <div class="breakdown-row"><span class="label">减：华盛顿州资本利得税</span><span class="val">-${fmt(waCGTax)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${type==='primary' ?
+        '华盛顿州资本利得税本身不针对自住房征收，但联邦层面的25万/50万免税额是否适用，取决于报税身份和居住年限，务必让税务师最终核实。装修支出能否计入成本基础，要看是否保留了原始凭证。' :
+        '投资房没有自住房的税收优待，资本利得税叠加会比想象中重——如果还没卖，可以先看看"1031递延税"工具，评估置换是否比直接出售更划算。'}</div>
+    </div>
+  `;
+}
+
+/* ---------- 03 置换预算 ---------- */
+panels.moveup = {
+  title: "置换预算",
+  eyebrow: "买卖决策 · 03",
+  desc: "卖出现有房产后的净所得，加上新增贷款能力，测算置换后能负担的新房总价区间。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>现房预计售价 <span class="hint">USD</span></label><input type="number" id="mu_price" value="950000" oninput="calc_moveup()"></div>
+      <div class="field"><label>现房剩余贷款 <span class="hint">USD</span></label><input type="number" id="mu_loan" value="320000" oninput="calc_moveup()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>出售相关成本 <span class="hint">%（佣金+过户）</span></label><input type="number" id="mu_costpct" value="6.5" step="0.5" oninput="calc_moveup()"></div>
+      <div class="field"><label>家庭年收入 <span class="hint">USD</span></label><input type="number" id="mu_income" value="380000" oninput="calc_moveup()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>每月其他负债 <span class="hint">USD</span></label><input type="number" id="mu_debt" value="1500" oninput="calc_moveup()"></div>
+      <div class="field"><label>新贷款利率 <span class="hint">%</span></label><input type="number" id="mu_rate" value="6.5" step="0.1" oninput="calc_moveup()"></div>
+    </div>
+  `,
+};
+
+function calc_moveup() {
+  const price = num('mu_price'), loan = num('mu_loan'), costPct = num('mu_costpct')/100;
+  const income = num('mu_income'), debt = num('mu_debt'), rate = num('mu_rate')/100;
+
+  const sellingCosts = price * costPct;
+  const netFromSale = price - loan - sellingCosts;
+
+  // DTI-based affordability: 43% max DTI, assume 36% goes to housing conservatively
+  const monthlyIncome = income/12;
+  const maxHousingPmt = monthlyIncome*0.36 - debt;
+  const monthlyRate = rate/12, n=30*12;
+  const maxLoan = monthlyRate>0 ? maxHousingPmt * (Math.pow(1+monthlyRate,n)-1) / (monthlyRate*Math.pow(1+monthlyRate,n)) : maxHousingPmt*n;
+  const maxLoanAdj = Math.max(0, maxLoan * 0.8); // back out rough tax/insurance/maint portion of the 36%
+
+  const totalBudget = netFromSale + maxLoanAdj;
+
+  const resEl = document.getElementById('res_moveup');
+  resEl.innerHTML = `
+    <div class="result-headline">置换后新房预算上限</div>
+    <div class="result-big">${fmt(totalBudget)}</div>
+    <div class="result-sub">现房净所得 + 新增贷款能力</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">现房售价</span><span class="val">${fmt(price)}</span></div>
+      <div class="breakdown-row"><span class="label">减：剩余贷款</span><span class="val">-${fmt(loan)}</span></div>
+      <div class="breakdown-row"><span class="label">减：出售成本</span><span class="val">-${fmt(sellingCosts)}</span></div>
+      <div class="breakdown-row"><span class="label">= 现房净所得（新首付）</span><span class="val">${fmt(netFromSale)}</span></div>
+      <div class="breakdown-row"><span class="label">+ 预估可贷款额度</span><span class="val">${fmt(maxLoanAdj)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">置换最大的风险点不是预算，而是"时间差"——先买后卖可能面临两套房同时持有的现金流压力，先卖后买可能面临过渡期租房的折腾。建议提前和贷款经纪人确认是否能做bridge loan，再决定操作顺序。</div>
+    </div>
+  `;
+}
+
+/* ---------- 04 最佳挂牌时间（定性+历史规律） ---------- */
+panels.listingtime = {
+  title: "最佳挂牌时间",
+  eyebrow: "买卖决策 · 04",
+  desc: "基于西雅图地区历史季节性规律，结合您的房屋情况，给出挂牌时机判断——这部分更多依赖经验判断，而非单一公式。",
+  form: `
+    <div class="field">
+      <label>房屋类型</label>
+      <select id="lt_type" onchange="calc_listingtime()">
+        <option value="house">独栋别墅</option>
+        <option value="condo">公寓 Condo</option>
+        <option value="townhome">联排 Townhome</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>当前月份</label>
+      <select id="lt_month" onchange="calc_listingtime()">
+        <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+        <option value="4">4月</option><option value="5">5月</option><option value="6" selected>6月</option>
+        <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+        <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>房屋是否已准备好（无需大修/已清理）</label>
+      <select id="lt_ready" onchange="calc_listingtime()">
+        <option value="yes">是，随时可挂牌</option>
+        <option value="no">否，还需要1-2个月准备</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>目标学区房（针对带学龄孩子的买家群体）</label>
+      <select id="lt_school" onchange="calc_listingtime()">
+        <option value="yes">是</option>
+        <option value="no">否</option>
+      </select>
+    </div>
+  `,
+};
+
+const SEASONALITY = {
+  // rough qualitative scoring per month for Seattle market, 1-5 buyer-activity scale (illustrative, based on typical PNW patterns)
+  house: [2,2,3,4,5,5,4,4,3,3,2,1],
+  condo: [2,2,3,3,4,4,4,3,3,3,2,2],
+  townhome: [2,2,3,4,4,4,4,3,3,3,2,2],
+};
+
+function calc_listingtime() {
+  const type = document.getElementById('lt_type').value;
+  const month = parseInt(document.getElementById('lt_month').value);
+  const ready = document.getElementById('lt_ready').value;
+  const school = document.getElementById('lt_school').value;
+
+  const scores = SEASONALITY[type];
+  const currentScore = scores[month-1];
+  let bestMonth = 1, bestScore = 0;
+  scores.forEach((s,i) => { if (s>bestScore) { bestScore=s; bestMonth=i+1; } });
+
+  const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+  let verdict, note;
+  if (ready==='yes' && currentScore>=4) {
+    verdict = "现在挂牌";
+    note = "当前正处于传统旺季附近，买家活跃度较高，且房屋已就绪——拖延的边际收益通常小于市场窗口流失的成本。";
+  } else if (ready==='no') {
+    const monthsToReady = 1.5;
+    verdict = `准备好后尽快挂牌（约${monthNames[month-1]}后1-2月内）`;
+    note = "房屋未就绪是比季节性更重要的变量——一个准备充分、照片专业的房源在淡季的表现，通常优于一个仓促上市、状态不佳的房源在旺季的表现。";
+  } else {
+    verdict = `建议等到${monthNames[bestMonth-1]}前后`;
+    note = "当前并非传统活跃期，若时间上不紧迫，等到春末夏初买家池更大时入场，议价空间通常更友好。";
+  }
+
+  if (school==='yes') {
+    note += " 另外，带学区诉求的买家家庭通常希望在新学年开始前完成搬迁，3-5月挂牌、6-7月成交是这类买家最集中的窗口。";
+  }
+
+  const resEl = document.getElementById('res_listingtime');
+  resEl.innerHTML = `
+    <div class="result-headline">挂牌时机判断</div>
+    <div class="result-big" style="font-size:26px">${verdict}</div>
+    <div class="result-sub">${type==='house'?'独栋别墅':type==='condo'?'公寓':'联排'} · 西雅图地区典型规律</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">当前月份买家活跃度</span><span class="val">${'●'.repeat(currentScore)}${'○'.repeat(5-currentScore)}</span></div>
+      <div class="breakdown-row"><span class="label">该房型历史最佳月份</span><span class="val">${monthNames[bestMonth-1]}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${note}</div>
+    </div>
+  `;
+}
+
+/* ---------- 05 可负担房价 ---------- */
+panels.afford = {
+  title: "可负担房价",
+  eyebrow: "贷款财务 · 05",
+  desc: "基于收入、负债与利率，估算银行大概率批准的贷款额度与合理预算区间。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>家庭年收入（税前）<span class="hint">USD</span></label><input type="number" id="af_income" value="320000" oninput="calc_afford()"></div>
+      <div class="field"><label>可用首付 <span class="hint">USD</span></label><input type="number" id="af_down" value="200000" oninput="calc_afford()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>每月其他负债 <span class="hint">车贷/学贷/卡债</span></label><input type="number" id="af_debt" value="1200" oninput="calc_afford()"></div>
+      <div class="field"><label>贷款利率 <span class="hint">%</span></label><input type="number" id="af_rate" value="6.5" step="0.1" oninput="calc_afford()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>预估地税率 <span class="hint">年化 %</span></label><input type="number" id="af_taxrate" value="1.0" step="0.1" oninput="calc_afford()"></div>
+      <div class="field"><label>预估月保险 <span class="hint">USD</span></label><input type="number" id="af_insurance" value="180" oninput="calc_afford()"></div>
+    </div>
+  `,
+};
+
+function calc_afford() {
+  const income = num('af_income'), down = num('af_down'), debt = num('af_debt');
+  const rate = num('af_rate')/100, taxRate = num('af_taxrate')/100, insurance = num('af_insurance');
+
+  const monthlyIncome = income/12;
+  const maxDTI = 0.43; // conservative max
+  const maxTotalDebt = monthlyIncome * maxDTI;
+  const maxHousingPmt = maxTotalDebt - debt;
+
+  // iteratively solve for price where P&I + tax + insurance = maxHousingPmt
+  const monthlyRate = rate/12, n=30*12;
+  // P&I = (price-down)*r*(1+r)^n/((1+r)^n-1); tax = price*taxRate/12
+  // maxHousingPmt = P&I + price*taxRate/12 + insurance
+  let price = 800000;
+  for (let i=0;i<50;i++) {
+    const loanAmt = Math.max(0, price-down);
+    const pi = monthlyRate>0 ? loanAmt*(monthlyRate*Math.pow(1+monthlyRate,n))/(Math.pow(1+monthlyRate,n)-1) : loanAmt/n;
+    const monthlyTax = price*taxRate/12;
+    const totalPmt = pi + monthlyTax + insurance;
+    const diff = maxHousingPmt - totalPmt;
+    price += diff*2; // newton-ish adjustment
+    if (Math.abs(diff) < 1) break;
+  }
+  price = Math.max(0, price);
+  const loanAmt = Math.max(0, price-down);
+  const pi = monthlyRate>0 ? loanAmt*(monthlyRate*Math.pow(1+monthlyRate,n))/(Math.pow(1+monthlyRate,n)-1) : loanAmt/n;
+
+  const resEl = document.getElementById('res_afford');
+  resEl.innerHTML = `
+    <div class="result-headline">建议预算上限</div>
+    <div class="result-big">${fmt(price)}</div>
+    <div class="result-sub">对应贷款额 ${fmt(loanAmt)}，月供约 ${fmt(maxHousingPmt)}</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">月供：本金+利息</span><span class="val">${fmt(pi)}</span></div>
+      <div class="breakdown-row"><span class="label">月供：地税</span><span class="val">${fmt(price*taxRate/12)}</span></div>
+      <div class="breakdown-row"><span class="label">月供：保险</span><span class="val">${fmt(insurance)}</span></div>
+      <div class="breakdown-row"><span class="label">建议预算区间</span><span class="val">${fmt(price*0.9)} - ${fmt(price*1.05)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">这是"银行愿意批多少"，不一定是"你该花多少"——尤其对收入来源包含股权激励/奖金的客户，建议把预算压到这个数字的85-90%，给现金流留出缓冲，尤其是利率重置或市场波动期间。</div>
+    </div>
+  `;
+}
+
+/* ---------- 06 再融资分析 ---------- */
+panels.refi = {
+  title: "再融资分析",
+  eyebrow: "贷款财务 · 06",
+  desc: "对比现有利率与市场新利率，计算再融资手续费需要多久能通过月供节省「回本」。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>现贷款余额 <span class="hint">USD</span></label><input type="number" id="rf_balance" value="450000" oninput="calc_refi()"></div>
+      <div class="field"><label>剩余贷款年限</label><input type="number" id="rf_remyears" value="26" oninput="calc_refi()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>现利率 <span class="hint">%</span></label><input type="number" id="rf_oldrate" value="7.2" step="0.1" oninput="calc_refi()"></div>
+      <div class="field"><label>新利率 <span class="hint">%</span></label><input type="number" id="rf_newrate" value="6.0" step="0.1" oninput="calc_refi()"></div>
+    </div>
+    <div class="field">
+      <label>再融资手续费 <span class="hint">USD（通常占贷款额2-5%）</span></label>
+      <input type="number" id="rf_fees" value="9000" oninput="calc_refi()">
+    </div>
+  `,
+};
+
+function calc_refi() {
+  const balance = num('rf_balance'), years = num('rf_remyears');
+  const oldRate = num('rf_oldrate')/100, newRate = num('rf_newrate')/100, fees = num('rf_fees');
+
+  const n = years*12;
+  const oldM = oldRate/12, newM = newRate/12;
+  const oldPmt = oldM>0 ? balance*(oldM*Math.pow(1+oldM,n))/(Math.pow(1+oldM,n)-1) : balance/n;
+  const newPmt = newM>0 ? balance*(newM*Math.pow(1+newM,n))/(Math.pow(1+newM,n)-1) : balance/n;
+  const monthlySavings = oldPmt - newPmt;
+  const breakEvenMonths = monthlySavings>0 ? fees/monthlySavings : Infinity;
+  const totalInterestOld = oldPmt*n - balance;
+  const totalInterestNew = newPmt*n - balance;
+
+  const resEl = document.getElementById('res_refi');
+  resEl.innerHTML = `
+    <div class="result-headline">回本周期</div>
+    <div class="result-big ${breakEvenMonths<=36?'positive':breakEvenMonths===Infinity?'negative':''}">${breakEvenMonths===Infinity?'不划算':Math.ceil(breakEvenMonths)+' 个月'}</div>
+    <div class="result-sub">月供节省 ${fmt(monthlySavings)}/月</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">现月供</span><span class="val">${fmt(oldPmt)}</span></div>
+      <div class="breakdown-row"><span class="label">新月供</span><span class="val">${fmt(newPmt)}</span></div>
+      <div class="breakdown-row"><span class="label">再融资手续费</span><span class="val">${fmt(fees)}</span></div>
+      <div class="breakdown-row"><span class="label">剩余年限总利息节省</span><span class="val">${fmt(totalInterestOld-totalInterestNew)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${breakEvenMonths<=24 ? '回本周期较短，是值得认真考虑的窗口。' : breakEvenMonths<=48 ? '回本周期中等，建议结合您未来2-4年是否有出售/置换计划再决定，如果近期可能卖房，回本前出售会让这笔手续费打水漂。' : '回本周期偏长，除非您确定会在房子里住很久，否则再融资的吸引力有限。'}</div>
+    </div>
+  `;
+}
+
+/* ---------- 07 首付来源对比 ---------- */
+panels.downpayment = {
+  title: "首付来源对比",
+  eyebrow: "贷款财务 · 07",
+  desc: "现金、卖出股票、401k借款——不同首付来源背后的机会成本和税务影响并不相同。",
+  form: `
+    <div class="field">
+      <label>所需首付金额 <span class="hint">USD</span></label>
+      <input type="number" id="dp_amount" value="200000" oninput="calc_downpayment()">
+    </div>
+    <div class="field-row">
+      <div class="field"><label>若卖股票，已实现资本利得占比 <span class="hint">%</span></label><input type="number" id="dp_gainspct" value="40" oninput="calc_downpayment()"></div>
+      <div class="field"><label>预估资本利得税率 <span class="hint">联邦+州 %</span></label><input type="number" id="dp_cgrate" value="20" oninput="calc_downpayment()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>股票预期年化回报 <span class="hint">%（机会成本）</span></label><input type="number" id="dp_stockreturn" value="8" step="0.5" oninput="calc_downpayment()"></div>
+      <div class="field"><label>401k借款利率 <span class="hint">%</span></label><input type="number" id="dp_401krate" value="7" step="0.5" oninput="calc_downpayment()"></div>
+    </div>
+  `,
+};
+
+function calc_downpayment() {
+  const amount = num('dp_amount'), gainsPct = num('dp_gainspct')/100;
+  const cgRate = num('dp_cgrate')/100, stockReturn = num('dp_stockreturn')/100, k401rate = num('dp_401krate')/100;
+
+  // Option A: cash on hand - no extra cost, but opportunity cost if cash was otherwise invested
+  const cashOpportunityCost = amount * stockReturn; // 1yr illustrative opportunity cost
+  // Option B: sell stock - pay capital gains tax, need to sell more to net `amount`, plus lose future growth on sold amount
+  const gainsAmount = amount * gainsPct;
+  const taxOwed = gainsAmount * cgRate;
+  const grossNeeded = amount + taxOwed;
+  const stockFutureLoss = grossNeeded * stockReturn; // 1yr illustrative
+  // Option C: 401k loan - pay yourself interest but lose market growth on borrowed amount, plus risk if job loss
+  const k401Cost = amount * (stockReturn - k401rate < 0 ? 0 : stockReturn) ; // simplified: opportunity cost of money out of market minus interest paid to self
+
+  const resEl = document.getElementById('res_downpayment');
+  resEl.innerHTML = `
+    <div class="result-headline">三种首付来源 1 年期机会成本对比</div>
+    <div class="result-big" style="font-size:24px">现金 最低成本</div>
+    <div class="result-sub">假设以下条件下的简化估算</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">A. 现金支付</span><span class="val">机会成本 ${fmt(cashOpportunityCost)}</span></div>
+      <div class="breakdown-row"><span class="label">B. 卖出股票（需多卖以覆盖税）</span><span class="val">需卖出 ${fmt(grossNeeded)}</span></div>
+      <div class="breakdown-row"><span class="label">　其中资本利得税</span><span class="val">${fmt(taxOwed)}</span></div>
+      <div class="breakdown-row"><span class="label">C. 401k借款</span><span class="val">市场踏空成本 ${fmt(k401Cost)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">这类决策几乎从不该只看数字——卖股票触发的资本利得税在华盛顿州可能叠加7%州税（超过年度免税额部分），401k借款一旦中途离职通常要求短期内还清，否则视为提前提取并产生罚款。强烈建议这部分和您的税务师一起最终确认，本工具仅做粗略方向参考。</div>
+    </div>
+  `;
+}
+
+/* ---------- 08 ARM vs 固定利率 ---------- */
+panels.armfixed = {
+  title: "ARM vs 固定利率",
+  eyebrow: "贷款财务 · 08",
+  desc: "浮动利率（ARM）与固定利率贷款，在不同利率变化假设下的总成本对比。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>贷款金额 <span class="hint">USD</span></label><input type="number" id="af2_loan" value="700000" oninput="calc_armfixed()"></div>
+      <div class="field"><label>持有/对比年限</label><input type="number" id="af2_years" value="10" oninput="calc_armfixed()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>固定利率 <span class="hint">%</span></label><input type="number" id="af2_fixedrate" value="6.5" step="0.1" oninput="calc_armfixed()"></div>
+      <div class="field"><label>ARM 初始利率 <span class="hint">%（前5-7年）</span></label><input type="number" id="af2_armrate" value="5.5" step="0.1" oninput="calc_armfixed()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>ARM 固定期 <span class="hint">年</span></label><input type="number" id="af2_armfixedyears" value="7" oninput="calc_armfixed()"></div>
+      <div class="field"><label>固定期后预估利率 <span class="hint">%</span></label><input type="number" id="af2_armresetrate" value="7.5" step="0.1" oninput="calc_armfixed()"></div>
+    </div>
+  `,
+};
+
+function calc_armfixed() {
+  const loan = num('af2_loan'), years = num('af2_years');
+  const fixedRate = num('af2_fixedrate')/100, armRate = num('af2_armrate')/100;
+  const armFixedYears = num('af2_armfixedyears'), armResetRate = num('af2_armresetrate')/100;
+  const n = 30*12;
+
+  function totalInterestPaid(rate1, rate1Months, rate2, totalMonths) {
+    let balance = loan;
+    let totalInt = 0;
+    const m1 = rate1/12;
+    const pmt1 = m1>0 ? balance*(m1*Math.pow(1+m1,n))/(Math.pow(1+m1,n)-1) : balance/n;
+    for (let i=0;i<Math.min(rate1Months,totalMonths);i++) {
+      const interest = balance*m1;
+      totalInt += interest;
+      balance -= (pmt1-interest);
+    }
+    if (totalMonths > rate1Months) {
+      const remainingN = n - rate1Months;
+      const m2 = rate2/12;
+      const pmt2 = m2>0 ? balance*(m2*Math.pow(1+m2,remainingN))/(Math.pow(1+m2,remainingN)-1) : balance/remainingN;
+      for (let i=0;i<(totalMonths-rate1Months);i++) {
+        const interest = balance*m2;
+        totalInt += interest;
+        balance -= (pmt2-interest);
+      }
+    }
+    return totalInt;
+  }
+
+  const fixedInterest = totalInterestPaid(fixedRate, n, fixedRate, years*12);
+  const armInterest = totalInterestPaid(armRate, armFixedYears*12, armResetRate, years*12);
+  const diff = fixedInterest - armInterest;
+
+  const m_fixed = fixedRate/12;
+  const fixedPmt = m_fixed>0 ? loan*(m_fixed*Math.pow(1+m_fixed,n))/(Math.pow(1+m_fixed,n)-1) : loan/n;
+  const m_arm = armRate/12;
+  const armPmt = m_arm>0 ? loan*(m_arm*Math.pow(1+m_arm,n))/(Math.pow(1+m_arm,n)-1) : loan/n;
+
+  const resEl = document.getElementById('res_armfixed');
+  resEl.innerHTML = `
+    <div class="result-headline">${years}年内总利息对比</div>
+    <div class="result-big ${diff>=0?'positive':'negative'}">${diff>=0?'ARM 更省':'固定利率更省'}</div>
+    <div class="result-sub">差额约 ${fmt(Math.abs(diff))}</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">固定利率：初始月供</span><span class="val">${fmt(fixedPmt)}</span></div>
+      <div class="breakdown-row"><span class="label">ARM：初始月供（前${armFixedYears}年）</span><span class="val">${fmt(armPmt)}</span></div>
+      <div class="breakdown-row"><span class="label">固定利率总利息</span><span class="val">${fmt(fixedInterest)}</span></div>
+      <div class="breakdown-row"><span class="label">ARM 总利息（含重置后）</span><span class="val">${fmt(armInterest)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">ARM 的真实风险不在计算器里——它在于"固定期结束时你是否还住在这套房子里、是否能承受利率上行的不确定性"。如果您明确计划在固定期内卖出或再融资，ARM 通常是更优选择；如果想长期持有自住，固定利率的确定性本身就有价值，哪怕账面利息略高。</div>
+    </div>
+  `;
+}
+
+/* ---------- 09 出租房回报 ---------- */
+panels.caprate = {
+  title: "出租房投资回报",
+  eyebrow: "投资配置 · 09",
+  desc: "计算资本化率（Cap Rate）与现金回报率（Cash-on-Cash Return），判断投资房是否值得入手。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>购入总价 <span class="hint">USD</span></label><input type="number" id="cr_price" value="650000" oninput="calc_caprate()"></div>
+      <div class="field"><label>首付 <span class="hint">USD</span></label><input type="number" id="cr_down" value="162500" oninput="calc_caprate()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>月租金收入 <span class="hint">USD</span></label><input type="number" id="cr_rent" value="3400" oninput="calc_caprate()"></div>
+      <div class="field"><label>贷款利率 <span class="hint">%</span></label><input type="number" id="cr_rate" value="6.8" step="0.1" oninput="calc_caprate()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>年地税+保险 <span class="hint">USD</span></label><input type="number" id="cr_tax" value="9000" oninput="calc_caprate()"></div>
+      <div class="field"><label>年维护+空置预留 <span class="hint">USD</span></label><input type="number" id="cr_maint" value="6000" oninput="calc_caprate()"></div>
+    </div>
+    <div class="field">
+      <label>物业管理费 <span class="hint">% 租金</span></label>
+      <input type="number" id="cr_mgmt" value="8" oninput="calc_caprate()">
+    </div>
+  `,
+};
+
+function calc_caprate() {
+  const price = num('cr_price'), down = num('cr_down'), rent = num('cr_rent');
+  const rate = num('cr_rate')/100, tax = num('cr_tax'), maint = num('cr_maint'), mgmtPct = num('cr_mgmt')/100;
+
+  const annualRent = rent*12;
+  const mgmtFee = annualRent*mgmtPct;
+  const operatingExpenses = tax + maint + mgmtFee;
+  const NOI = annualRent - operatingExpenses;
+  const capRate = (NOI/price)*100;
+
+  const loanAmt = price-down;
+  const monthlyRate = rate/12, n=30*12;
+  const mortgagePmt = monthlyRate>0 ? loanAmt*(monthlyRate*Math.pow(1+monthlyRate,n))/(Math.pow(1+monthlyRate,n)-1) : loanAmt/n;
+  const annualDebtService = mortgagePmt*12;
+  const annualCashFlow = NOI - annualDebtService;
+  const cashOnCash = (annualCashFlow/down)*100;
+
+  const resEl = document.getElementById('res_caprate');
+  resEl.innerHTML = `
+    <div class="result-headline">资本化率 Cap Rate</div>
+    <div class="result-big">${fmtPct(capRate,2)}</div>
+    <div class="result-sub">现金回报率 Cash-on-Cash: <strong>${fmtPct(cashOnCash,2)}</strong></div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">年租金收入</span><span class="val">${fmt(annualRent)}</span></div>
+      <div class="breakdown-row"><span class="label">减：运营支出</span><span class="val">-${fmt(operatingExpenses)}</span></div>
+      <div class="breakdown-row"><span class="label">= 净运营收入 NOI</span><span class="val">${fmt(NOI)}</span></div>
+      <div class="breakdown-row"><span class="label">减：年还贷支出</span><span class="val">-${fmt(annualDebtService)}</span></div>
+      <div class="breakdown-row"><span class="label">= 年现金流</span><span class="val">${fmt(annualCashFlow)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${capRate>=5 ? 'Cap Rate 在5%以上，在西雅图地区属于相对健康的水平——但要核实租金假设是否保守、空置率是否被低估。' : 'Cap Rate 低于5%，在西雅图这类增值预期主导的市场并不罕见，意味着这笔投资更多是赌资产增值，而非现金流——务必想清楚你的投资逻辑是哪一种。'}</div>
+    </div>
+  `;
+}
+
+/* ---------- 10 1031递延税 ---------- */
+panels['1031'] = {
+  title: "1031 Exchange 递延税",
+  eyebrow: "投资配置 · 10",
+  desc: "投资房置换（1031 Exchange）相比直接出售，能递延多少资本利得税。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>原始购入价（成本基础）<span class="hint">USD</span></label><input type="number" id="ex_basis" value="450000" oninput="calc_1031()"></div>
+      <div class="field"><label>已提折旧累计 <span class="hint">USD</span></label><input type="number" id="ex_depreciation" value="80000" oninput="calc_1031()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>现售价 <span class="hint">USD</span></label><input type="number" id="ex_saleprice" value="850000" oninput="calc_1031()"></div>
+      <div class="field"><label>出售成本 <span class="hint">%</span></label><input type="number" id="ex_sellcost" value="6" step="0.5" oninput="calc_1031()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>联邦长期资本利得税率 <span class="hint">%</span></label><input type="number" id="ex_fedrate" value="20" oninput="calc_1031()"></div>
+      <div class="field"><label>折旧追回税率 <span class="hint">%（25%上限）</span></label><input type="number" id="ex_deprate" value="25" oninput="calc_1031()"></div>
+    </div>
+  `,
+};
+
+function calc_1031() {
+  const basis = num('ex_basis'), depreciation = num('ex_depreciation');
+  const salePrice = num('ex_saleprice'), sellCostPct = num('ex_sellcost')/100;
+  const fedRate = num('ex_fedrate')/100, depRate = num('ex_deprate')/100;
+
+  const adjustedBasis = basis - depreciation;
+  const sellCost = salePrice*sellCostPct;
+  const totalGain = salePrice - sellCost - adjustedBasis;
+  const depreciationRecapture = Math.min(depreciation, totalGain);
+  const capitalGain = Math.max(0, totalGain - depreciationRecapture);
+
+  const depRecaptureTax = depreciationRecapture*depRate;
+  const fedCGTax = capitalGain*fedRate;
+  const waCGTax = Math.max(0, totalGain - WA_CG_EXEMPTION)*WA_CG_RATE;
+
+  const totalTaxIfSold = depRecaptureTax + fedCGTax + waCGTax;
+
+  const resEl = document.getElementById('res_1031');
+  resEl.innerHTML = `
+    <div class="result-headline">直接出售需缴纳的税</div>
+    <div class="result-big negative">${fmt(totalTaxIfSold)}</div>
+    <div class="result-sub">通过 1031 Exchange 置换可全额递延</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">总资本利得</span><span class="val">${fmt(totalGain)}</span></div>
+      <div class="breakdown-row"><span class="label">　其中折旧追回部分</span><span class="val">${fmt(depreciationRecapture)}</span></div>
+      <div class="breakdown-row"><span class="label">折旧追回税（最高25%）</span><span class="val">${fmt(depRecaptureTax)}</span></div>
+      <div class="breakdown-row"><span class="label">联邦资本利得税</span><span class="val">${fmt(fedCGTax)}</span></div>
+      <div class="breakdown-row"><span class="label">华盛顿州资本利得税</span><span class="val">${fmt(waCGTax)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">1031 Exchange 不是免税，是递延——未来出售置换后的新物业时，递延的税款会一起计算。常见的坑是45天identification期限和180天完成期限非常死板，错过就前功尽弃，建议交易确定后立刻联系合格中介人（Qualified Intermediary），不要等到过户当天才找。</div>
+    </div>
+  `;
+}
+
+/* ---------- 11 房产 vs 股市 ---------- */
+panels.vsmarket = {
+  title: "房产 vs 股市",
+  eyebrow: "投资配置 · 11",
+  desc: "把首付这笔钱投入房产 vs 投入指数基金，长期终值对比（不考虑杠杆效应之外的居住价值）。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>可投入本金 <span class="hint">USD（即首付金额）</span></label><input type="number" id="vm_capital" value="200000" oninput="calc_vsmarket()"></div>
+      <div class="field"><label>对比年限</label><input type="number" id="vm_years" value="15" oninput="calc_vsmarket()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>房产历史年化增值率 <span class="hint">%</span></label><input type="number" id="vm_realestate" value="4.5" step="0.5" oninput="calc_vsmarket()"></div>
+      <div class="field"><label>股市历史年化回报 <span class="hint">%</span></label><input type="number" id="vm_stock" value="9" step="0.5" oninput="calc_vsmarket()"></div>
+    </div>
+    <div class="field">
+      <label>房产杠杆倍数 <span class="hint">总价/首付，如5倍=20%首付</span></label>
+      <input type="number" id="vm_leverage" value="5" step="0.5" oninput="calc_vsmarket()">
+    </div>
+  `,
+};
+
+function calc_vsmarket() {
+  const capital = num('vm_capital'), years = num('vm_years');
+  const reRate = num('vm_realestate')/100, stockRate = num('vm_stock')/100;
+  const leverage = num('vm_leverage');
+
+  const propertyValue = capital*leverage;
+  const futurePropertyValue = propertyValue*Math.pow(1+reRate,years);
+  const propertyGain = futurePropertyValue - propertyValue; // unleveraged appreciation gain (ignoring mortgage paydown/costs for simplicity)
+  const realEstateFinal = capital + propertyGain; // equity = initial down + appreciation (assuming interest-only/ignoring paydown for pure comparison)
+
+  const stockFinal = capital*Math.pow(1+stockRate,years);
+
+  const resEl = document.getElementById('res_vsmarket');
+  const winner = realEstateFinal >= stockFinal ? '房产（杠杆后）' : '股市';
+  resEl.innerHTML = `
+    <div class="result-headline">${years}年后终值对比</div>
+    <div class="result-big">${winner}更优</div>
+    <div class="result-sub">同样投入 ${fmt(capital)} 本金</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">房产路径（${leverage}倍杠杆）终值</span><span class="val">${fmt(realEstateFinal)}</span></div>
+      <div class="breakdown-row"><span class="label">股市路径终值</span><span class="val">${fmt(stockFinal)}</span></div>
+      <div class="breakdown-row"><span class="label">房产总价值</span><span class="val">${fmt(futurePropertyValue)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">这个对比刻意简化了——没算房贷利息、地税、维护成本，也没算股票的资本利得税。房产真正的杠杆优势在于"借别人的钱（银行贷款）享受资产增值"，但这也意味着更高的流动性风险和持有成本。这个工具更适合用来建立直觉，不适合作为最终决策依据。</div>
+    </div>
+  `;
+}
+
+/* ---------- 12 资产传承结构 ---------- */
+panels.estate = {
+  title: "资产传承结构",
+  eyebrow: "投资配置 · 12",
+  desc: "房产持有方式（个人持有 vs 信托持有）对未来传承时资本利得税基础（step-up basis）的影响示意。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>当前市值 <span class="hint">USD</span></label><input type="number" id="es_value" value="1500000" oninput="calc_estate()"></div>
+      <div class="field"><label>原始成本基础 <span class="hint">USD</span></label><input type="number" id="es_basis" value="600000" oninput="calc_estate()"></div>
+    </div>
+    <div class="field">
+      <label>持有方式</label>
+      <select id="es_structure" onchange="calc_estate()">
+        <option value="individual">个人/夫妻共同持有</option>
+        <option value="revocable">可撤销生前信托（Revocable Living Trust）</option>
+        <option value="irrevocable">不可撤销信托（Irrevocable Trust）</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>预估资本利得税率 <span class="hint">联邦+州 %</span></label>
+      <input type="number" id="es_cgrate" value="25" oninput="calc_estate()">
+    </div>
+  `,
+};
+
+function calc_estate() {
+  const value = num('es_value'), basis = num('es_basis');
+  const structure = document.getElementById('es_structure').value;
+  const cgRate = num('es_cgrate')/100;
+
+  const unrealizedGain = value - basis;
+  let stepUpApplies, taxIfSoldByHeirs, note;
+
+  if (structure === 'individual' || structure === 'revocable') {
+    stepUpApplies = true;
+    taxIfSoldByHeirs = 0; // step-up resets basis to current value
+    note = "个人持有或可撤销信托，在持有人去世后通常都能获得 step-up basis（成本基础重置为当前市值），继承人随后立即出售几乎不产生资本利得税。这是大多数自住房/家族房产的标准持有方式，不需要额外结构。";
+  } else {
+    stepUpApplies = false;
+    taxIfSoldByHeirs = unrealizedGain*cgRate;
+    note = "不可撤销信托的 step-up basis 是否适用，取决于具体信托条款（是否被视为完成赠与、是否纳入应税遗产）——这是个非常容易被忽视的细节，很多家庭设立不可撤销信托是为了其他目的（资产保护、遗产税规划），却意外牺牲了 step-up basis，导致继承人未来卖房时反而要交更多资本利得税。务必让专业的遗产规划律师核实具体条款。";
+  }
+
+  const resEl = document.getElementById('res_estate');
+  resEl.innerHTML = `
+    <div class="result-headline">未实现资本利得</div>
+    <div class="result-big">${fmt(unrealizedGain)}</div>
+    <div class="result-sub">${stepUpApplies ? '继承后预计可获得 Step-up Basis' : '继承后可能不适用 Step-up Basis'}</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">当前市值</span><span class="val">${fmt(value)}</span></div>
+      <div class="breakdown-row"><span class="label">原始成本基础</span><span class="val">${fmt(basis)}</span></div>
+      <div class="breakdown-row"><span class="label">继承人若立即出售，预估税负</span><span class="val">${fmt(taxIfSoldByHeirs)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${note}</div>
+    </div>
+  `;
+}
+
+/* ---------- 13 百万富翁税影响 ---------- */
+panels.milltax = {
+  title: "百万富翁税影响",
+  eyebrow: "政策与区域 · 13",
+  desc: "华盛顿州 ESSB 6346（百万富翁税）2028年生效后，对您家庭收入与资本利得的预估影响。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>家庭年应税收入 <span class="hint">USD</span></label><input type="number" id="mt_income" value="1400000" oninput="calc_milltax()"></div>
+      <div class="field"><label>预计本年资本利得 <span class="hint">USD（如有）</span></label><input type="number" id="mt_gains" value="300000" oninput="calc_milltax()"></div>
+    </div>
+    <div class="field">
+      <label>该笔资本利得是否已被华盛顿州现有7%资本利得税覆盖</label>
+      <select id="mt_alreadytaxed" onchange="calc_milltax()">
+        <option value="yes">是（适用抵免规则）</option>
+        <option value="no">否</option>
+      </select>
+    </div>
+  `,
+};
+
+function calc_milltax() {
+  const income = num('mt_income'), gains = num('mt_gains');
+  const alreadyTaxed = document.getElementById('mt_alreadytaxed').value;
+
+  const MILL_THRESHOLD = 1000000;
+  const MILL_RATE = 0.099;
+  const totalIncome = income; // assume income figure already includes ordinary income; gains handled separately for credit illustration
+
+  const excessOverThreshold = Math.max(0, totalIncome - MILL_THRESHOLD);
+  let millTax = excessOverThreshold * MILL_RATE;
+
+  // simplified credit: if gains already taxed under WA 7% CG tax, illustrate the credit reduces double-taxation on that portion
+  let creditNote = '';
+  if (alreadyTaxed === 'yes' && gains>0) {
+    const existingCGTax = Math.max(0, gains-WA_CG_EXEMPTION)*WA_CG_RATE;
+    creditNote = `已缴纳的州资本利得税（约${fmt(existingCGTax)}）预计可部分抵免，避免完全双重征税，具体抵免机制需以最终细则为准。`;
+  }
+
+  const resEl = document.getElementById('res_milltax');
+  resEl.innerHTML = `
+    <div class="result-headline">2028年起预计新增州税负（年化）</div>
+    <div class="result-big ${millTax>0?'negative':''}">${fmt(millTax)}</div>
+    <div class="result-sub">超过 $1,000,000 门槛部分按 9.9% 计算</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">家庭应税收入</span><span class="val">${fmt(totalIncome)}</span></div>
+      <div class="breakdown-row"><span class="label">超过门槛部分</span><span class="val">${fmt(excessOverThreshold)}</span></div>
+      <div class="breakdown-row"><span class="label">新增州税（9.9%）</span><span class="val">${fmt(millTax)}</span></div>
+    </div>
+    ${creditNote ? `<div class="breakdown-row" style="margin-top:8px;font-size:12.5px;color:var(--ink-soft)">${creditNote}</div>` : ''}
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${millTax>0 ?
+        '如果您每年收入稳定超过门槛，重点不是这一年交多少税，而是"收入和资本利得的时间安排"——比如大额资本利得能否安排在2027年底前实现。这部分建议尽早和税务师做多年期规划，而不是等到2028年临近再处理。' :
+        '当前测算未超过门槛，但如果未来有大额一次性收入（股权变现、房产出售等），建议提前测算是否会临时推高当年收入越过门槛。'}</div>
+    </div>
+  `;
+}
+
+/* ---------- 14 学区溢价 ---------- */
+panels.schoolpremium = {
+  title: "学区溢价",
+  eyebrow: "政策与区域 · 14",
+  desc: "对比两个区域/学区的历史均价差异，量化「学区溢价」具体值多少钱。数据为示例性区间，建议结合最新MLS数据核实。",
+  form: `
+    <div class="field-row">
+      <div class="field"><label>区域 A 同类房屋均价 <span class="hint">USD</span></label><input type="number" id="sp_pricea" value="1450000" oninput="calc_schoolpremium()"></div>
+      <div class="field"><label>区域 A 学区评分 <span class="hint">1-10</span></label><input type="number" id="sp_ratinga" value="9" oninput="calc_schoolpremium()"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>区域 B 同类房屋均价 <span class="hint">USD</span></label><input type="number" id="sp_priceb" value="980000" oninput="calc_schoolpremium()"></div>
+      <div class="field"><label>区域 B 学区评分 <span class="hint">1-10</span></label><input type="number" id="sp_ratingb" value="6" oninput="calc_schoolpremium()"></div>
+    </div>
+  `,
+};
+
+function calc_schoolpremium() {
+  const priceA = num('sp_pricea'), ratingA = num('sp_ratinga');
+  const priceB = num('sp_priceb'), ratingB = num('sp_ratingb');
+
+  const priceDiff = priceA - priceB;
+  const ratingDiff = ratingA - ratingB;
+  const premiumPerPoint = ratingDiff !== 0 ? priceDiff/ratingDiff : 0;
+  const premiumPct = priceB>0 ? (priceDiff/priceB)*100 : 0;
+
+  const resEl = document.getElementById('res_schoolpremium');
+  resEl.innerHTML = `
+    <div class="result-headline">学区溢价</div>
+    <div class="result-big">${fmt(priceDiff)}</div>
+    <div class="result-sub">约 ${fmtPct(premiumPct)} 的价格差异</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">区域A均价（评分${ratingA}）</span><span class="val">${fmt(priceA)}</span></div>
+      <div class="breakdown-row"><span class="label">区域B均价（评分${ratingB}）</span><span class="val">${fmt(priceB)}</span></div>
+      <div class="breakdown-row"><span class="label">每提升1分学区评分对应溢价</span><span class="val">${fmt(premiumPerPoint)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">学区溢价不是线性的——评分从7到9的跳跃，往往比从5到7的溢价更陡峭，因为顶尖学区的买家池更小、更不计较价格。同时要注意，这个差异里往往也混杂了社区本身（治安、商业配套）的溢价，不完全是"学区"单一因素，建议结合具体两三个对比房源核实，而非只看区域均价。</div>
+    </div>
+  `;
+}
+
+/* ---------- 15 持有成本对比 ---------- */
+panels.holdcompare = {
+  title: "持有成本对比",
+  eyebrow: "政策与区域 · 15",
+  desc: "对比西雅图与其他州/城市的真实年化持有成本（地税+保险+维护），帮助评估「是否该搬家」。",
+  form: `
+    <div class="field">
+      <label>房屋市值 <span class="hint">USD</span></label>
+      <input type="number" id="hc_value" value="1200000" oninput="calc_holdcompare()">
+    </div>
+    <div class="field-row">
+      <div class="field"><label>对比地区</label>
+        <select id="hc_compareto" onchange="calc_holdcompare()">
+          <option value="ca">加州（湾区）</option>
+          <option value="tx">德州（无州所得税）</option>
+          <option value="nv">内华达州（无州所得税）</option>
+          <option value="fl">佛罗里达（无州所得税）</option>
+        </select>
+      </div>
+      <div class="field"><label>西雅图地税率 <span class="hint">%</span></label><input type="number" id="hc_watax" value="1.0" step="0.05" oninput="calc_holdcompare()"></div>
+    </div>
+  `,
+};
+
+const STATE_TAX_RATES = { ca: 0.0075, tx: 0.018, nv: 0.0084, fl: 0.0089 }; // illustrative effective property tax rates
+const STATE_NAMES = { ca: '加州（湾区）', tx: '德州', nv: '内华达州', fl: '佛罗里达' };
+
+function calc_holdcompare() {
+  const value = num('hc_value'), waTax = num('hc_watax')/100;
+  const compareTo = document.getElementById('hc_compareto').value;
+  const compareTax = STATE_TAX_RATES[compareTo];
+
+  const waAnnualTax = value*waTax;
+  const compareAnnualTax = value*compareTax;
+  const diff = compareAnnualTax - waAnnualTax;
+
+  const resEl = document.getElementById('res_holdcompare');
+  resEl.innerHTML = `
+    <div class="result-headline">年化地税差异 vs ${STATE_NAMES[compareTo]}</div>
+    <div class="result-big ${diff<=0?'positive':'negative'}">${fmt(Math.abs(diff))}</div>
+    <div class="result-sub">${diff<=0 ? '西雅图更低' : '西雅图更高（少见情况，请核实房屋估值基础）'}</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">西雅图年化地税</span><span class="val">${fmt(waAnnualTax)}</span></div>
+      <div class="breakdown-row"><span class="label">${STATE_NAMES[compareTo]}年化地税</span><span class="val">${fmt(compareAnnualTax)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">地税只是持有成本的一部分——真正决定"该不该搬"的，是州所得税（华盛顿2028年起新增百万富翁税）、资本利得税、保险成本（佛州的飓风保险近年涨幅惊人）的综合考量。单看地税对比容易得出片面结论，建议把这个工具和"百万富翁税影响"工具一起用。</div>
+    </div>
+  `;
+}
+
+/* ---------- 16 装修ROI ---------- */
+panels.renovroi = {
+  title: "装修 ROI",
+  eyebrow: "卖家专属 · 16",
+  desc: "基于行业经验数据，估算不同翻新项目在出售时的预期回收率。",
+  form: `
+    <div class="field">
+      <label>装修项目类型</label>
+      <select id="rr_type" onchange="calc_renovroi()">
+        <option value="kitchen_minor">厨房小翻新</option>
+        <option value="kitchen_major">厨房大翻新</option>
+        <option value="bathroom">浴室翻新</option>
+        <option value="paint">室内粉刷</option>
+        <option value="landscaping">庭院景观</option>
+        <option value="deck">户外平台/Deck</option>
+        <option value="windows">更换门窗</option>
+        <option value="basement">地下室改造</option>
+        <option value="pool">游泳池</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>预算 <span class="hint">USD</span></label>
+      <input type="number" id="rr_budget" value="35000" oninput="calc_renovroi()">
+    </div>
+  `,
+};
+
+// illustrative ROI ranges based on general industry patterns (e.g. Remodeling Magazine Cost vs Value type data), simplified
+const RENOV_ROI = {
+  kitchen_minor: { roi: 0.85, note: "小翻新（换台面/电器/五金）通常是性价比最高的项目之一，回收率较高且改善买家第一印象明显。" },
+  kitchen_major: { roi: 0.55, note: "大翻新回收率通常不如小翻新，容易「过度装修」超出周边房价水平——除非现状厨房已严重过时影响销售。" },
+  bathroom: { roi: 0.65, note: "中等回收率，建议优先翻新主卧浴室而非客卫，买家对主卧浴室的敏感度更高。" },
+  paint: { roi: 1.0, note: "粉刷是回收率最高的改善项之一，成本低、见效快，几乎是出售前的标配动作。" },
+  landscaping: { roi: 0.75, note: "外观吸引力（curb appeal）直接影响第一印象和线上点击率，适度投入性价比高。" },
+  deck: { roi: 0.6, note: "西雅图气候下户外空间吸引力适中，回收率因季节和买家偏好波动较大。" },
+  windows: { roi: 0.7, note: "节能门窗对注重长期持有成本的买家有吸引力，但纯为卖房而换通常不是优先项。" },
+  basement: { roi: 0.5, note: "地下室改造投入大、回收率偏低，除非是把不可用空间改造为可用卧室/卫生间，能直接提升房屋「卧室数」这种硬指标。" },
+  pool: { roi: 0.3, note: "西雅图地区泳池回收率普遍偏低，部分买家甚至视为额外维护负担而非加分项，不建议为卖房专门新建。" },
+};
+
+function calc_renovroi() {
+  const type = document.getElementById('rr_type').value;
+  const budget = num('rr_budget');
+  const data = RENOV_ROI[type];
+
+  const recoveredValue = budget*data.roi;
+  const netCost = budget - recoveredValue;
+
+  const resEl = document.getElementById('res_renovroi');
+  resEl.innerHTML = `
+    <div class="result-headline">预期价值回收</div>
+    <div class="result-big">${fmt(recoveredValue)}</div>
+    <div class="result-sub">回收率约 ${fmtPct(data.roi*100,0)}，净自付成本 ${fmt(netCost)}</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">装修预算</span><span class="val">${fmt(budget)}</span></div>
+      <div class="breakdown-row"><span class="label">预期增加房屋售价</span><span class="val">${fmt(recoveredValue)}</span></div>
+      <div class="breakdown-row"><span class="label">净自付（未回收部分）</span><span class="val">${fmt(netCost)}</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${data.note} 这些回收率是基于行业普遍经验的估算区间，具体到您这套房子的真实回收率，取决于周边房源的装修水平对比——装修到"略好于周边平均"性价比最高，装修到"远超周边"往往是浪费。</div>
+    </div>
+  `;
+}
+
+/* ---------- 17 定价策略模拟 ---------- */
+panels.pricestrategy = {
+  title: "定价策略模拟",
+  eyebrow: "卖家专属 · 17",
+  desc: "「定价偏高慢慢降」vs「一步到位定准价格」，两种策略下预期成交结果的模拟对比。",
+  form: `
+    <div class="field">
+      <label>市场公允价值评估 <span class="hint">USD（经纪人CMA估值）</span></label>
+      <input type="number" id="ps_fairvalue" value="1000000" oninput="calc_pricestrategy()">
+    </div>
+    <div class="field">
+      <label>当前市场热度</label>
+      <select id="ps_heat" onchange="calc_pricestrategy()">
+        <option value="hot">卖方市场（库存紧张，需求旺）</option>
+        <option value="balanced" selected>平衡市场</option>
+        <option value="cold">买方市场（库存充足，需求弱）</option>
+      </select>
+    </div>
+  `,
+};
+
+function calc_pricestrategy() {
+  const fairValue = num('ps_fairvalue');
+  const heat = document.getElementById('ps_heat').value;
+
+  // illustrative modeled outcomes based on typical market dynamics
+  const scenarios = {
+    hot: {
+      aggressive: { finalPct: 0.98, days: 35, note: "热市场中定高价仍可能吸引买家，但首周缺乏多人竞价的「抢offer」效应会被放大降价信号削弱。" },
+      accurate: { finalPct: 1.04, days: 8, note: "热市场中准确定价（甚至略低）往往引发多人竞价，最终成交价反超挂牌价。" },
+    },
+    balanced: {
+      aggressive: { finalPct: 0.93, days: 65, note: "平衡市场中定价偏高，买家会用脚投票，多次降价后买家容易怀疑房子有问题。" },
+      accurate: { finalPct: 0.99, days: 25, note: "准确定价能维持买家信心，议价空间可控。" },
+    },
+    cold: {
+      aggressive: { finalPct: 0.88, days: 110, note: "买方市场中定价偏高几乎必然导致长期挂牌、多轮降价，最终成交价往往低于一开始就定准的价格。" },
+      accurate: { finalPct: 0.95, days: 50, note: "买方市场中即使准确定价，也需要更长时间和更多议价空间，但好于反复降价带来的「滞销」印象。" },
+    },
+  };
+
+  const s = scenarios[heat];
+  const aggressivePrice = fairValue*1.08; // listed 8% over fair value
+  const aggressiveFinal = aggressivePrice*s.aggressive.finalPct;
+  const accurateFinal = fairValue*s.accurate.finalPct;
+
+  const resEl = document.getElementById('res_pricestrategy');
+  resEl.innerHTML = `
+    <div class="result-headline">两种策略预期最终成交价</div>
+    <div class="result-big">${fmt(accurateFinal)}</div>
+    <div class="result-sub">「一步到位」策略预期结果（对比「偏高慢慢降」：${fmt(aggressiveFinal)}）</div>
+    <div class="breakdown">
+      <div class="breakdown-row"><span class="label">策略A：定价偏高慢慢降</span><span class="val">挂牌${fmt(aggressivePrice)}</span></div>
+      <div class="breakdown-row"><span class="label">　预期最终成交价</span><span class="val">${fmt(aggressiveFinal)}</span></div>
+      <div class="breakdown-row"><span class="label">　预期挂牌天数</span><span class="val">${s.aggressive.days} 天</span></div>
+      <div class="breakdown-row"><span class="label">策略B：一步到位定准价格</span><span class="val">挂牌${fmt(fairValue)}</span></div>
+      <div class="breakdown-row"><span class="label">　预期最终成交价</span><span class="val">${fmt(accurateFinal)}</span></div>
+      <div class="breakdown-row"><span class="label">　预期挂牌天数</span><span class="val">${s.accurate.days} 天</span></div>
+    </div>
+    <div class="agent-note">
+      <div class="agent-note-label">经纪人视角</div>
+      <div class="agent-note-text">${s.accurate.note} ${s.aggressive.note}</div>
+    </div>
+  `;
+}
+
+/* =========================================================
+   渲染与切换逻辑
+========================================================= */
+function showPanel(id) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.id===id));
+  const p = panels[id];
+  if (!p) return;
+  main.innerHTML = `<div class="panel active">${panelShell(p.eyebrow, p.title, p.desc, p.form, 'res_'+id)}</div>`;
+  // run initial calc
+  const calcFn = window['calc_'+id];
+  if (typeof calcFn === 'function') calcFn();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// init first panel
+showPanel('rentbuy');
+
+/* =========================================================
+   PWA 离线缓存：注册 Service Worker
+   把当前页面本身缓存下来，断网时依然能打开 App
+   （所有计算逻辑都在本地 JS 中完成，不依赖任何服务器接口）
+========================================================= */
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE_NAME = 'realestate-toolkit-v1';
+    self.addEventListener('install', (event) => {
+      event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => cache.add(self.registration.scope))
+      );
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', (event) => {
+      event.waitUntil(self.clients.claim());
+    });
+    self.addEventListener('fetch', (event) => {
+      event.respondWith(
+        caches.match(event.request).then((cached) => {
+          if (cached) return cached;
+          return fetch(event.request).then((response) => {
+            // 只缓存同源、成功的GET请求，外部字体等资源失败时不影响页面主体可用性
+            if (event.request.method === 'GET' && response && response.status === 200) {
+              const responseClone = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+            }
+            return response;
+          }).catch(() => cached || caches.match(self.registration.scope));
+        })
+      );
+    });
+  `;
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl).catch((err) => {
+    console.log('离线缓存未启用（不影响正常使用）:', err);
+  });
+}
+
+</script>
+</body>
+</html>
