@@ -657,7 +657,7 @@
       </div>
       <button type="submit" class="gate-submit" id="gateSubmitBtn">提交并解锁使用</button>
     </form>
-    <div class="gate-privacy" id="gatePrivacyText">您的邮箱仅用于发送微信群二维码及房产资讯，不会用于其他用途</div>
+    <div class="gate-privacy" id="gatePrivacyText">您的邮箱仅用于房产资讯的推送与互动</div>
   </div>
 </div>
 
@@ -705,7 +705,7 @@ const UI_TEXT = {
   gateEmailLabel: { zh: "邮箱地址", en: "Email Address" },
   gateSubmitBtn: { zh: "提交并解锁使用", en: "Submit & Unlock" },
   gateSubmitting: { zh: "提交中...", en: "Submitting..." },
-  gatePrivacy: { zh: "您的邮箱仅用于发送微信群二维码及房产资讯，不会用于其他用途", en: "Your email is used only to send the WeChat group QR code and real estate updates — nothing else." },
+  gatePrivacy: { zh: "您的邮箱仅用于房产资讯的推送与互动", en: "Your email is used only for real estate updates and communications." },
   gateErrEmpty: { zh: "请填写邮箱地址", en: "Please enter your email address" },
   gateErrInvalid: { zh: "请填写有效的邮箱地址", en: "Please enter a valid email address" },
   gateErrFail: { zh: "提交失败，请检查网络后重试，或直接联系我们", en: "Submission failed — please check your connection and try again, or contact us directly" },
@@ -2562,13 +2562,12 @@ function showPanel(id) {
 
 /* =========================================================
    登记网关（Registration Gate）
-   未登记用户必须填写邮箱才能使用工具集
-   提交后数据发送到 Formspree，Formspree 会转发邮件到经纪人邮箱
-   经纪人手动回复，把微信群二维码发给对方
-   ⚠️ 部署前必读：把下面 FORMSPREE_ENDPOINT 换成你自己的 Formspree 表单地址
-       获取方式：https://formspree.io 免费注册 → New Form → 复制表单地址
+   未登记用户填写邮箱后，数据直接写入 Google Sheets
+   经纪人登录 Google Sheets 查看所有留资记录，按需手动发微信群二维码
+   容错设计：即使后台提交失败（网络异常、超配额等），
+   访客依然能正常使用工具集，不会被卡在注册弹窗前面
 ========================================================= */
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqgwjaw'; // 经纪人 David Ding 的真实留资表单
+const GS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyrJKhwyd8IyB5u--GpSFyob0Ch2ro5PMJzXCGNgB4vaNMBTPn-Jr7ShUwrEk_-olBy3A/exec';
 const GATE_LOCAL_KEY = 'gate_registered_v1'; // 本地标记：这台设备是否已提交过
 
 function appInit() {
@@ -2577,11 +2576,9 @@ function appInit() {
 }
 
 function isAlreadyRegisteredLocally() {
-  // 双重保险：localStorage 在真实网站（GitHub Pages等）上持久有效
-  // window.storage 在 Claude Artifact 预览环境中持久有效
   try {
     if (localStorage.getItem(GATE_LOCAL_KEY) === 'yes') return true;
-  } catch (err) { /* localStorage 不可用时忽略，继续检查下一种方式 */ }
+  } catch (err) { /* 忽略 */ }
   return false;
 }
 
@@ -2594,14 +2591,13 @@ async function checkGateStatus() {
     appInit();
     return;
   }
-  // 同时检查 window.storage（Claude预览环境内有效，便于你在对话里直接测试效果）
   try {
     const result = await window.storage.get(GATE_LOCAL_KEY, false);
     if (result && result.value === 'yes') {
       appInit();
       return;
     }
-  } catch (err) { /* key不存在或存储不可用，按未登记处理 */ }
+  } catch (err) { /* 不可用时按未登记处理 */ }
   showGate();
 }
 
@@ -2614,6 +2610,17 @@ function showGate() {
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function unlockApp() {
+  // 解锁工具集，关闭弹窗
+  markRegisteredLocally();
+  try { window.storage.set(GATE_LOCAL_KEY, 'yes', false); } catch (err) { /* 忽略 */ }
+  document.getElementById('gateOverlay').style.display = 'none';
+  appInit();
+  setTimeout(() => {
+    document.getElementById('joinToast').style.display = 'block';
+  }, 600);
 }
 
 document.getElementById('gateForm').addEventListener('submit', async function(e) {
@@ -2636,40 +2643,23 @@ document.getElementById('gateForm').addEventListener('submit', async function(e)
   submitBtn.disabled = true;
   submitBtn.textContent = t('gateSubmitting');
 
+  // 尝试把邮箱写入 Google Sheets
+  // 不管成功还是失败，都解锁工具集——邮箱收集是锦上添花，不该成为卡脖子的关卡
   try {
-    // 提交到 Formspree，Formspree 会转发一封邮件到你（经纪人）的邮箱
-    // 邮件里会包含访客的邮箱地址，你看到后手动回复并附上微信群二维码即可
-    const response = await fetch(FORMSPREE_ENDPOINT, {
+    await fetch(GS_ENDPOINT, {
       method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        message: '来自西雅图房产决策工具集的新留资，请发送微信群二维码给对方。',
-        _subject: '新留资：' + email,
-      }),
+      mode: 'no-cors', // Google Apps Script 需要 no-cors 模式
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, timestamp: new Date().toISOString() }),
     });
-
-    if (!response.ok) {
-      throw new Error('Formspree submission failed: ' + response.status);
-    }
-
-    // 本地标记"已提交"，双保险写入
-    markRegisteredLocally();
-    try { await window.storage.set(GATE_LOCAL_KEY, 'yes', false); } catch (err) { /* 忽略，不影响主流程 */ }
-
-    // 关闭弹窗，展示工具集，并弹出提交成功提示
-    document.getElementById('gateOverlay').style.display = 'none';
-    appInit();
-    setTimeout(() => {
-      document.getElementById('joinToast').style.display = 'block';
-    }, 600);
-
+    // no-cors 模式下无法读取 response，但只要没抛出异常就视为成功
   } catch (err) {
-    console.error('登记提交失败:', err);
-    errorEl.textContent = t('gateErrFail');
-    submitBtn.disabled = false;
-    submitBtn.textContent = t('gateSubmitBtn');
+    // 网络故障或其他异常：记录日志，但不阻塞访客使用
+    console.warn('邮箱记录提交失败（不影响使用）:', err.message);
   }
+
+  // 无论提交结果如何，都解锁工具集
+  unlockApp();
 });
 
 // 页面加载后立即检查登记状态
@@ -2677,23 +2667,12 @@ checkGateStatus();
 
 /* =========================================================
    自动清理：移除旧版本可能注册过的 Service Worker
-   旧版本的离线缓存实现存在缺陷，可能导致页面被错误缓存后白屏。
-   这段代码会在访客打开页面时自动注销任何残留的 Service Worker，
-   让大家不需要手动清缓存就能恢复正常访问。
-   （这段代码本身可以在确认所有访客都已修复后，未来安全移除）
 ========================================================= */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     registrations.forEach((registration) => registration.unregister());
-  }).catch(() => { /* 静默失败，不影响主流程 */ });
+  }).catch(() => { /* 静默失败 */ });
 }
-
-/* =========================================================
-   注：之前版本曾尝试用 Service Worker 实现离线缓存，
-   但该实现在缓存命中逻辑上有缺陷，可能导致页面被错误缓存后
-   白屏卡死且难以通过常规刷新恢复，因此已移除。
-   如未来需要离线支持，应改用更稳妥的缓存策略并做充分测试。
-========================================================= */
 
 </script>
 </body>
