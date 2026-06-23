@@ -664,8 +664,8 @@
 <!-- ===== 提交成功提示：登记成功后短暂出现 ===== -->
 <div class="join-toast" id="joinToast" style="display:none;">
   <button class="join-toast-close" onclick="document.getElementById('joinToast').style.display='none'">×</button>
-  <div class="join-toast-title" id="toastTitleText">✅ 提交成功！</div>
-  <div class="join-toast-desc" id="toastDescText">「西雅图房地产咨询」微信群二维码将在24小时内发送到您的邮箱，请注意查收（也可看看垃圾邮件箱）</div>
+  <div class="join-toast-title" id="toastTitleText"></div>
+  <div class="join-toast-desc" id="toastDescText">注册成功！🎉<br>西雅图房产决策微信群二维码将发送至您的邮箱。<br>群内汇聚资深房产经纪人、贷款专家、税务师与房地产律师——<br>工具集帮您算清数字，专家团队帮您看透市场。</div>
 </div>
 
 
@@ -709,10 +709,10 @@ const UI_TEXT = {
   gateErrEmpty: { zh: "请填写邮箱地址", en: "Please enter your email address" },
   gateErrInvalid: { zh: "请填写有效的邮箱地址", en: "Please enter a valid email address" },
   gateErrFail: { zh: "提交失败，请检查网络后重试，或直接联系我们", en: "Submission failed — please check your connection and try again, or contact us directly" },
-  toastTitle: { zh: "✅ 提交成功！", en: "✅ Submitted!" },
+  toastTitle: { zh: "", en: "" },
   toastDesc: {
-    zh: "「西雅图房地产咨询」微信群二维码将在24小时内发送到您的邮箱，请注意查收（也可看看垃圾邮件箱）",
-    en: "The WeChat group QR code will be emailed to you within 24 hours — please check your inbox (and spam folder)."
+    zh: "注册成功！🎉<br>西雅图房产决策微信群二维码将发送至您的邮箱。<br>群内汇聚资深房产经纪人、贷款专家、税务师与房地产律师——<br>工具集帮您算清数字，专家团队帮您看透市场。",
+    en: "You're in! 🎉<br>The Seattle Real Estate WeChat group QR code is on its way to your inbox.<br>Inside: experienced agents, lenders, tax advisors, and real estate attorneys.<br>The toolkit crunches the numbers. The experts help you read the market."
   },
 };
 
@@ -754,7 +754,7 @@ function renderGateText() {
   set('gateSubmitBtn', 'gateSubmitBtn');
   set('gatePrivacyText', 'gatePrivacy');
   set('toastTitleText', 'toastTitle');
-  set('toastDescText', 'toastDesc');
+  set('toastDescText', 'toastDesc', true); // true = innerHTML，支持 <br> 换行
   const gateLangZh = document.getElementById('gateLangZh');
   const gateLangEn = document.getElementById('gateLangEn');
   if (gateLangZh && gateLangEn) {
